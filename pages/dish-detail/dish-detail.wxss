@@ -1,0 +1,173 @@
+.detail-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-weight: normal;
+    background-color: rgba(246,246,246,1);
+}
+
+.detail-block{
+    flex-grow: 1;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    background-color: rgba(246,246,246,1);
+}
+
+.detail-block .picture {
+    font-size: 0;
+}
+.detail-block .picture image {
+    width: 100%;
+}
+
+.detail-block .title{
+    height: 108rpx;
+    line-height: 108rpx;
+    padding: 0 25rpx;
+    border-bottom: 1rpx solid #D3D3D3;
+    color: #333;
+    font-size: 32rpx;
+    background: #fff;
+}
+
+.detail-block .tag.suit {
+    padding-top: 10rpx;
+}
+.detail-block .tag {
+    padding: 40rpx 25rpx;
+    background: #fff;
+}
+
+.detail-block .tag view{
+    display: inline-block;
+    padding: 10rpx 40rpx;
+    margin-right: 20rpx;
+    margin-bottom: 25rpx;
+    border: 1rpx solid #D3D3D3;
+    border-radius: 10rpx;
+    font-size: 24rpx;
+    color: #333;
+}
+
+.detail-block .tag view.active {
+    background: #F3E0B6;
+    border-color: #D1A646;
+    color: #B88D2D;
+}
+
+.description {
+    margin-top: 10rpx;
+    margin-bottom: 50rpx;
+    padding: 26rpx 33rpx;
+    background: #fff;
+}
+
+.description-title {
+    font-size: 28rpx;
+    color: #333;
+}
+
+.description-title.no-des {
+    color: #A1A1A1;
+}
+
+.description .content {
+    margin-top: 20rpx;
+    font-size: 24rpx;
+    color: #666;
+}
+
+.nav-bar {
+    display: flex;
+    flex-basis: 104rpx;
+    flex-shrink: 0;
+    background: yellow;
+    line-height: 104rpx;
+}
+
+.nav-bar .msg{
+    flex-grow: 1;
+    font-size: 32rpx;
+    color: #fff;
+    background: #343C3F;
+    padding-left: 50rpx;
+}
+
+.nav-bar .msg .button {
+    position: relative;
+    display: inline-block;
+    width: 200rpx;
+    height: 65rpx;
+    line-height: 65rpx;
+    margin: 0 30rpx;
+    text-align: center;
+    float: right;
+}
+.nav-bar .msg .button .minus,
+.nav-bar .msg .button .plus {
+    width: 60rpx;
+    height: 100%;
+}
+
+.nav-bar .msg .button .minus {
+    position: absolute;
+    top: 20rpx;
+    left: 0;
+    line-height: 50rpx;
+    border: 1rpx solid #B0AFAF;
+    border-right: 0;
+    border-top-left-radius: 50rpx;
+    border-bottom-left-radius: 50rpx;
+}
+
+.nav-bar .msg .button .plus {
+    position: absolute;
+    top: 20rpx;
+    left: 150rpx;
+    border: 1rpx solid #B0AFAF;
+    border-left: 0;
+    border-top-right-radius: 50rpx;
+    border-bottom-right-radius: 50rpx;
+}
+
+.nav-bar .msg .button .minus image {
+    width: 26rpx;
+    height: 6rpx;
+}
+
+.nav-bar .msg .button .plus image {
+    width: 26rpx;
+    height: 26rpx;
+}
+
+.nav-bar .msg .count {
+    position:absolute;
+    top: 20rpx;
+    left: 60rpx;
+    display: inline-block;
+    width: 90rpx;
+    height: 100%;
+    border: 1rpx solid #B0AFAF;
+    text-align: center;
+    font-size: 28rpx;
+    color: #B0AFAF;
+}
+
+.nav-bar .msg .price {
+    font-size: 32rpx;
+    color: #666;
+}
+
+.nav-bar .msg .money {
+    margin-right: 10rpx;
+    color: #ED3E39;
+}
+
+.nav-bar .btn{
+    flex-basis: 250rpx;
+    flex-shrink: 0;
+    background: #ED3E39;
+    font-size: 32rpx;
+    color: #fff;
+    text-align: center;
+}

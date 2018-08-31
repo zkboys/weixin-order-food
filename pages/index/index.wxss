@@ -1,0 +1,73 @@
+/**index.wxss**/
+.user-info {
+    position:relative;
+    display: flex;
+    width: 100%;
+    padding-top: 50rpx;
+    padding-left: 100rpx;
+    align-items: center;
+}
+.user-info button {
+    position: absolute;
+    top: 0;
+    right: 50%;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+}
+.avatar {
+    flex-basis: 95rpx;
+    flex-shrink: 0;
+    width: 95rpx;
+    height: 95rpx;
+    border-radius: 50%;
+}
+.welcome {
+    padding-left: 30rpx;
+    color: #D1A646;
+    font-size: 28rpx;
+}
+
+.store-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.store-logo {
+  width: 241rpx;
+  height: 194rpx;
+}
+
+.store-name {
+  margin-top: 26rpx;
+  font-size: 31rpx;
+}
+
+.store-desk {
+    margin-top: 74rpx;
+    font-size: 28rpx;
+}
+
+.btn-operator-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 200rpx;
+}
+.btn-operator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 80rpx;
+}
+
+.order {
+    width: 120rpx;
+    height: 120rpx;
+}
+
+.order-text{
+    margin-top: 18rpx;
+    font-size: 30rpx;
+}

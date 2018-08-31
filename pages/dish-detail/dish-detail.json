@@ -1,0 +1,6 @@
+{
+  "disableScroll": true,
+  "usingComponents": {
+    "title-bar": "../../components/title-bar/title-bar"
+  }
+}

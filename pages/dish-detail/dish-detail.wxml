@@ -1,0 +1,73 @@
+<view class="detail-container">
+    <view class="detail-block">
+        <view class="picture">
+            <image src="/images/vegetable@3x.png" mode="widthFix"></image>
+        </view>
+        <view class="title">健康时蔬油麦菜</view>
+        <block wx:if="{{isSuit}}">
+            <title-bar title="牛逼的二选一"/>
+            <view class="tag suit">
+                <view class="active">干锅山地牛肉（2分）</view>
+                <view>小可乐</view>
+                <view>小雪碧</view>
+            </view>
+        </block>
+        <view class="tag" wx:else>
+            <view class="active">清炒</view>
+            <view>炝炒</view>
+            <view>清蒸</view>
+            <view>红烧</view>
+            <view>清炒</view>
+            <view>炝炒</view>
+            <view>清蒸</view>
+            <view>红烧</view>
+            <view>清炒</view>
+            <view>炝炒</view>
+            <view>清蒸</view>
+            <view>红烧</view>
+        </view>
+        <view class="description" wx:if="{{isSuit}}">
+            <view class="description-title no-des">暂无菜品介绍</view>
+        </view>
+        <view class="description" wx:else>
+            <view class="description-title">菜品介绍</view>
+            <view class="content">
+                份量350克，清爽适口，滋味丰富，老少皆宜
+                份量350克，清爽适口，滋味丰富，老少皆宜
+                份量350克，清爽适口，滋味丰富，老少皆宜
+                份量350克，清爽适口，滋味丰富，老少皆宜
+                份量350克，清爽适口，滋味丰富，老少皆宜
+                份量350克，清爽适口，滋味丰富，老少皆宜
+                份量350克，清爽适口，滋味丰富，老少皆宜
+                份量350克，清爽适口，滋味丰富，老少皆宜
+                份量350克，清爽适口，滋味丰富，老少皆宜
+                份量350克，清爽适口，滋味丰富，老少皆宜
+                份量350克，清爽适口，滋味丰富，老少皆宜
+                份量350克，清爽适口，滋味丰富，老少皆宜
+                份量350克，清爽适口，滋味丰富，老少皆宜
+                份量350克，清爽适口，滋味丰富，老少皆宜
+                份量350克，清爽适口，滋味丰富，老少皆宜
+                份量350克，清爽适口，滋味丰富，老少皆宜
+                份量350克，清爽适口，滋味丰富，老少皆宜
+            </view>
+        </view>
+    </view>
+    <view class="nav-bar">
+        <view class="msg">
+            <text class="price">单价：</text>
+            <text class="price money">88</text>
+            <text class="price">元</text>
+            <view class="button">
+                <view class="minus">
+                    <image src="/images/minus2@3x.png"/>
+                </view>
+                <view class="count">10</view>
+                <view class="plus">
+                    <image src="/images/add2@3x.png"/>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+
+

@@ -1,0 +1,55 @@
+{
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.0.4",
+	"appid": "wxabc993e3374fca1d",
+	"projectname": "%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F-%E6%89%AB%E7%A0%81%E7%82%B9%E9%A4%90",
+	"isGameTourist": false,
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 1,
+			"list": [
+				{
+					"id": 0,
+					"name": "1047: 扫描小程序码 scene=storeId=1&deskNum=01",
+					"pathName": "pages/index/index",
+					"query": "scene=storeId%3d1%26deskNum%3d01",
+					"scene": "1047"
+				},
+				{
+					"id": 1,
+					"name": "1001: 发现栏小程序主入口",
+					"pathName": "pages/dishes/dishes",
+					"query": "",
+					"scene": "1001"
+				}
+			]
+		}
+	}
+}

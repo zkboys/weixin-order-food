@@ -1,0 +1,5 @@
+<view class="title-bar" style="{{titleStyle}}">
+    <image class="bar-icon" src="/images/line-left@3x.png" mode="scaleToFill"></image>
+    <text class="bar-text">{{title}}</text>
+    <image class="bar-icon" src="/images/line-right@3x.png" mode="scaleToFill"></image>
+</view>

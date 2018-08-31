@@ -1,0 +1,16 @@
+.title-bar {
+    text-align: center;
+    padding: 10rpx;
+    background: #fff;
+}
+
+.bar-icon {
+    width: 74rpx;
+    height: 17rpx;
+}
+
+.bar-text {
+    margin: 0 34rpx;
+    font-size: 28rpx;
+    color: #D1A646;
+}

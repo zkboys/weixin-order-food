@@ -1,0 +1,14 @@
+{
+  "pages": [
+    "pages/dishes/dishes",
+    "pages/index/index",
+    "pages/dish-detail/dish-detail"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "backgroundColor": "#333",
+    "navigationBarBackgroundColor": "#000",
+    "navigationBarTitleText": "小随点餐",
+    "navigationBarTextStyle": "white"
+  }
+}

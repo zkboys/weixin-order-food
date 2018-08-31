@@ -1,0 +1,40 @@
+<!--index.wxml-->
+<view class="container">
+    <image class="container-bg" src="/images/bg.jpg" mode="scaleToFill"></image>
+    <view class="user-info" wx:if="{{!hasUserInfo && canIUse}}">
+        <button open-type="getUserInfo" bindgetuserinfo="getUserInfo"/>
+        <image class="avatar" src="/images/user@3x.png" mode="scaleToFill"></image>
+        <view class="welcome">
+            <view>顾客</view>
+            <view>您好，欢迎光临！</view>
+        </view>
+    </view>
+    <view class="user-info" wx:else>
+        <button bindtap="toHistoryOrders"/>
+        <image class="avatar" src="{{userInfo.avatarUrl}}" mode="scaleToFill"></image>
+        <view class="welcome">
+            <view>{{userInfo.nickName}}</view>
+            <view>您好，欢迎光临！</view>
+        </view>
+    </view>
+    <view class="store-info" wx:if="{{showOrderButton}}">
+        <image class="store-logo" src="/images/logo@3x.png" mode="cover"></image>
+        <text class="store-name">{{store.name}}</text>
+        <text class="store-desk" wx:if="{{showOrderButton}}">桌位：{{deskNum}}</text>
+        <text class="store-desk" wx:else></text>
+    </view>
+    <view class="scan-tip" wx:else>
+        TODO 提示用户使用微信扫描桌面二维码进行点餐
+    </view>
+
+    <view class="btn-operator-group" wx:if="{{showOrderButton}}">
+        <view class="btn-operator" bindtap="handleOrder" data-type="single">
+            <image class="order" src="/images/user-single@3x.png" mode="cover"></image>
+            <text class="order-text">单人点餐</text>
+        </view>
+        <view class="btn-operator" bindtap="handleOrder" data-type="multiple">
+            <image class="order" src="/images/user-multiple@3x.png" mode="cover"></image>
+            <text class="order-text">多人同步点餐</text>
+        </view>
+    </view>
+</view>
