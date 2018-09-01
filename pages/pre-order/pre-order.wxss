@@ -7,22 +7,24 @@
 }
 
 .title {
+    position: relative;
     padding: 30rpx 0;
     margin-top: 15rpx;
     color: #333333;
     font-size: 28rpx;
     text-align: center;
     background: #fff;
+    border-bottom: 1rpx solid #DFE2E5;
 }
 
 .desk-number {
-    padding-right: 30rpx;
-    padding-bottom: 10rpx;
+    position: absolute;
+    top: 37rpx;
+    right: 30rpx;
     color: #A1A1A1;
     font-size: 24rpx;
     background: #fff;
     text-align: right;
-    border-bottom: 1rpx solid #DFE2E5;
 }
 
 .dish-list{

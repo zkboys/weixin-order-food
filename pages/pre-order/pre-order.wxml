@@ -1,9 +1,9 @@
 <view class="pre-order-container">
     <view class="title">
-        待下单（{{dishTotalCount}}）
-    </view>
-    <view class="desk-number">
-        桌号：{{deskNum}}
+        <text>待下单（{{dishTotalCount}})</text>
+        <view class="desk-number">
+            桌号：{{deskNum}}
+        </view>
     </view>
     <view class="dish-list">
         <view class="dish-item" wx:for="{{dishes}}" wx:for-item="dish" wx:key="{{dish.id}}">

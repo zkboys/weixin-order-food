@@ -1,0 +1,41 @@
+<view class="history-order-container">
+    <view class="tab-container">
+        <view
+                wx:for="{{tabs}}"
+                wx:key="{{item.status}}"
+                class="tab {{item.status === activeTabStatus ? 'active' : ''}}"
+                data-status="{{item.status}}"
+                bindtap="handleTabClick"
+        >
+            {{item.name}}
+        </view>
+    </view>
+    <view class="order-list">
+        <view class="order-item" bindtap="handleOrderClick" data-id="111">
+            <view class="store-name">{{storeName}}</view>
+            <view class="order-msg">
+                <view class="time-money">
+                    <text>2018-09-01 17:11:47</text>
+                    <text class="money">￥130.00</text>
+                </view>
+                <view class="type-status">
+                    <text>店内自助</text>
+                    <text class="status">已完成</text>
+                </view>
+            </view>
+        </view>
+        <view class="order-item" bindtap="handleOrderClick" data-id="222">
+            <view class="store-name">{{storeName}}</view>
+            <view class="order-msg">
+                <view class="time-money">
+                    <text>2018-09-01 17:11:47</text>
+                    <text class="money">￥130.00</text>
+                </view>
+                <view class="type-status">
+                    <text>店内自助</text>
+                    <text class="status">已完成</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

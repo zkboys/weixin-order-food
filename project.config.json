@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 6,
 			"list": [
 				{
 					"id": 0,
@@ -69,6 +69,20 @@
 					"pathName": "pages/order-success/order-success",
 					"query": "",
 					"scene": "1001"
+				},
+				{
+					"id": -1,
+					"name": "history-orders",
+					"pathName": "pages/history-orders/history-orders",
+					"query": "scene=storeId%3d1%26deskNum%3d01",
+					"scene": "1047"
+				},
+				{
+					"id": -1,
+					"name": "order-detail",
+					"pathName": "pages/order-detail/order-detail",
+					"query": "scene=storeId%3d1%26deskNum%3d01",
+					"scene": "1047"
 				}
 			]
 		}

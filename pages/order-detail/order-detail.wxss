@@ -1,0 +1,103 @@
+.order-detail-container{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-weight: normal;
+    background-color: rgba(246,246,246,1);
+}
+.store-msg {
+    text-align: center;
+    padding-top: 50rpx;
+    background: #fff;
+    flex-shrink: 0;
+    border-bottom: 1rpx solid #DFE2E5;
+}
+.mobile-position{
+    display: flex;
+    padding-bottom: 30rpx;
+    color: #A1A1A1;
+    font-size: 24rpx;
+}
+
+.mobile-position view.mp-item{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.mobile-position view.mp-item.first{
+    border-right: 1px solid #A1A1A1;
+}
+
+.store-name {
+    color: #333;
+    font-size: 28rpx;
+    margin-bottom: 30rpx;
+}
+.mobile-position image {
+    width: 20rpx;
+    height: 25rpx;
+    margin-right: 10rpx;
+}
+
+.block{
+    flex-grow: 1;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.order-msg,
+.dish-msg
+{
+    margin-top: 10rpx;
+    background: #ffff;
+}
+.order-msg .title,
+.dish-msg .title
+{
+    display: flex;
+    justify-content: space-between;
+    padding: 20rpx 30rpx;
+    color: #333;
+    font-size: 28rpx;
+    border-bottom: 1rpx solid #DFE2E5;
+}
+
+.dish-msg .money {
+    color: #ED3E39;
+}
+
+.order-msg{
+    margin-bottom: 50rpx;
+}
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20rpx 30rpx;
+    background: #fff;
+}
+
+.item .label{
+    color: #A1A1A1;
+    font-size: 24rpx;
+}
+
+.item .value{
+    color: #333;
+    font-size: 24rpx;
+}
+
+.dish-msg .item .value {
+    flex-basis: 150rpx;
+    flex-shrink: 0;
+    text-align: right;
+}
+.dish-name {
+    color: #333;
+}
+
+.money-prefix{
+    color: #A1A1A1;
+}

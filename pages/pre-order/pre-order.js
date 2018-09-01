@@ -46,8 +46,15 @@ Page({
         const {remark} = this.data;
         // TODO 直接调用支付，支付成功之后，跳转到下单成功界面
 
-        // 此次点餐结束，清空相关数据，桌号清空，就要重新扫码了，其他数据不清除
-        wx.removeStorageSync('deskNum');
+        // 点餐中状态设置为false，需要重新扫码，进入点餐流程
+        wx.setStorageSync('ordering', false);
+
+        // 清除本次存储的相关数据
+        wx.removeStorageSync('scanQRCodeTime');
+        wx.removeStorageSync('storeId');
+        wx.removeStorageSync('orderType');
+        wx.removeStorageSync('cart');
+
         wx.navigateTo({
             url: '/pages/order-success/order-success',
         })

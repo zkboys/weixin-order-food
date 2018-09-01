@@ -5,7 +5,9 @@
     "pages/dish-detail/dish-detail",
     "pages/people-number/people-number",
     "pages/pre-order/pre-order",
-    "pages/order-success/order-success"
+    "pages/order-success/order-success",
+    "pages/history-orders/history-orders",
+    "pages/order-detail/order-detail"
   ],
   "window": {
     "backgroundTextStyle": "light",

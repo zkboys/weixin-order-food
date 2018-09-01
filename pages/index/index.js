@@ -21,6 +21,7 @@ Page({
             this.setData({deskNum, showOrderButton: true});
             wx.setStorageSync('deskNum', deskNum);
             wx.setStorageSync('scanQRCodeTime', Date.now());
+            wx.setStorageSync('ordering', true); // 正在点餐中
         }
 
         if (storeId) {
@@ -97,11 +98,13 @@ Page({
 
         wx.navigateTo({
             url: '/pages/people-number/people-number'
-        })
+        });
     },
 
     // 跳转到用户历史订单
     toHistoryOrders: function () {
-        wx.showToast({title: '跳转到历史订单'});
+        wx.navigateTo({
+            url: '/pages/history-orders/history-orders'
+        })
     },
 });

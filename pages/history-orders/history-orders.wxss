@@ -1,0 +1,70 @@
+.history-order-container{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-weight: normal;
+    background-color: rgba(246,246,246,1);
+}
+
+.tab-container {
+    display: flex;
+    flex-shrink: 0;
+    background: #fff;
+    margin-bottom: 10rpx;
+}
+
+.tab-container .tab {
+    flex-grow: 1;
+    padding: 25rpx 0;
+    text-align: center;
+    color: #666;
+    font-size: 32rpx;
+}
+
+.tab-container .tab.active {
+    color: #D1A646;
+    border-bottom: 2rpx solid #D1A646;
+}
+
+.order-list {
+    flex-grow: 1;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.order-item {
+    background: #fff;
+    margin-bottom: 10rpx;
+}
+
+.store-name{
+    color: #333;
+    font-size: 28rpx;
+    padding: 20rpx 30rpx;
+    border-bottom: 1rpx solid #DFE2E5;
+}
+
+.time-money, .type-status {
+    display: flex;
+    justify-content: space-between;
+    font-size: 24rpx;
+    padding: 30rpx;
+}
+
+.time-money {
+    padding-bottom: 15rpx;
+    color: #A1A1A1;
+}
+
+.time-money .money{
+    color: #535353;
+}
+
+.type-status {
+    padding-top: 0;
+    color: #333333;
+}
+
+.type-status .status {
+    color: #535353;
+}

@@ -1,27 +1,30 @@
 //app.js
 wx.test = '可以扩展wx';
 App({
-    onLaunch: function (options) {
+    // onLaunch 小程序启动的时候出发，再次打开并出发
+    onShow: function (options) {
         // 扫码超过时间 清空数据
         const scanQRCodeTime = wx.getStorageSync('scanQRCodeTime');
         // fixme 修改这个时间限制，或者从后台设置中获取
         const time = 2 * 60 * 60 * 10000;
 
         if (Date.now() - scanQRCodeTime > time) {
-            // 清空相关数据，桌号清空，就要重新扫码了，其他数据不清除
-            wx.removeStorageSync('deskNum');
+            // 点餐中状态设置为false，需要重新扫码，发起点餐流程
+            wx.setStorageSync('ordering', false);
         }
 
         // 非扫码进入其他页面，并且桌号不存在，跳转到首页，提示用户扫码
         const {path} = options;
-        const deskNum = wx.getStorageSync('deskNum');
+        const ordering = wx.getStorageSync('ordering'); // 正在点餐中
+
         // 不需要跳转的页面
-        // TODO 添加忽略页面 应该就一个历史订单
         const ignorePaths = [
             'pages/index/index',
+            'pages/history-orders/history-orders',
+            'pages/order-detail/order-detail',
         ];
 
-        if (ignorePaths.indexOf(path) === -1 && !deskNum) {
+        if (ignorePaths.indexOf(path) === -1 && !ordering) {
             wx.reLaunch({
                 url: 'pages/index/index'
             })
