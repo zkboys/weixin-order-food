@@ -1,0 +1,104 @@
+.order-success-container{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-weight: normal;
+    background-color: rgba(246,246,246,1);
+}
+
+.success-tip{
+    padding: 50rpx 0;
+    background: #fff;
+    text-align: center;
+    color: #333;
+    font-size: 32rpx;
+    border-bottom: 1px solid rgba(246,246,246,1);
+}
+
+.success-tip image {
+    width: 85rpx;
+    height: 85rpx;
+    margin-bottom: 30rpx;
+}
+
+.title {
+    padding: 30rpx 0;
+    margin-top: 15rpx;
+    color: #333333;
+    font-size: 28rpx;
+    text-align: center;
+    background: #fff;
+}
+
+.desk-number {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 30rpx;
+    padding-left: 30rpx;
+    padding-bottom: 10rpx;
+    color: #A1A1A1;
+    font-size: 24rpx;
+    background: #fff;
+    text-align: right;
+    border-bottom: 1rpx solid #DFE2E5;
+}
+.dish-list{
+    flex-grow: 1;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #fff;
+}
+
+.dish-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25rpx 30rpx;
+}
+
+.dish-msg {
+    flex-grow: 1;
+    font-size: 28rpx;
+}
+
+.dish-name{
+    color: #333;
+}
+
+.dish-unit{
+    color: #A1A1A1;
+}
+
+.dish-money {
+    flex-basis: 150rpx;
+    flex-shrink: 0;
+    font-size: 20rpx;
+    color: #333;
+    text-align: right;
+}
+
+.money-prefix {
+    color: #A1A1A1;
+}
+
+.dish-total{
+    margin-top: 30rpx;
+    margin-bottom: 30rpx;
+    padding-right: 30rpx;
+    font-size: 24rpx;
+    color: #ED3E39;
+    text-align: right;
+}
+
+
+.reorder {
+    flex-basis: 104rpx;
+    flex-shrink: 0;
+    line-height: 104rpx;
+    z-index: 999;
+    background: #D1A646;
+    text-align: center;
+    color: #fff;
+    font-size: 32rpx;
+}

@@ -1,8 +1,11 @@
 {
   "pages": [
-    "pages/dishes/dishes",
     "pages/index/index",
-    "pages/dish-detail/dish-detail"
+    "pages/dishes/dishes",
+    "pages/dish-detail/dish-detail",
+    "pages/people-number/people-number",
+    "pages/pre-order/pre-order",
+    "pages/order-success/order-success"
   ],
   "window": {
     "backgroundTextStyle": "light",

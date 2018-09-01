@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 0,
 			"list": [
 				{
 					"id": 0,
@@ -46,6 +46,27 @@
 					"id": 1,
 					"name": "1001: 发现栏小程序主入口",
 					"pathName": "pages/dishes/dishes",
+					"query": "",
+					"scene": "1001"
+				},
+				{
+					"id": -1,
+					"name": "people-number",
+					"pathName": "pages/people-number/people-number",
+					"query": "",
+					"scene": "1001"
+				},
+				{
+					"id": -1,
+					"name": "pre-order",
+					"pathName": "pages/pre-order/pre-order",
+					"query": "",
+					"scene": "1001"
+				},
+				{
+					"id": -1,
+					"name": "order-success",
+					"pathName": "pages/order-success/order-success",
 					"query": "",
 					"scene": "1001"
 				}

@@ -8,7 +8,7 @@ App({
         const time = 2 * 60 * 60 * 10000;
 
         if (Date.now() - scanQRCodeTime > time) {
-            // 清空相关数据，桌号清空，就要重新扫码了，其他数据不用清除
+            // 清空相关数据，桌号清空，就要重新扫码了，其他数据不清除
             wx.removeStorageSync('deskNum');
         }
 

@@ -1,0 +1,54 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.title{
+    text-align: center;
+}
+
+.avatar {
+    flex-basis: 95rpx;
+    flex-shrink: 0;
+    width: 95rpx;
+    height: 95rpx;
+    border-radius: 50%;
+}
+
+.tip {
+    margin-top: 25rpx;
+    font-size: 24rpx;
+    color: #D1A646;
+}
+
+.number-box {
+    margin-top: 50rpx;
+}
+
+.number-item {
+    display: inline-block;
+    width: 85rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    margin: 24rpx 26rpx;
+    color: #D1A646;
+    border: 1rpx solid #D1A646;
+    border-radius: 6rpx;
+    font-size: 24rpx;
+    text-align: center;
+}
+
+.number-item.active{
+    background: #D1A646;
+    color: #fff;
+}
+
+.btn-ok{
+    padding: 22rpx 0;
+    margin: 70rpx 20rpx 0 20rpx;
+    background: #D1A646;
+    border-radius: 6rpx;
+    font-size: 32rpx;
+    color: #fff;
+    text-align: center;
+}

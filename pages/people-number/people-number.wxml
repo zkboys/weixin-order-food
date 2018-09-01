@@ -1,0 +1,25 @@
+<view class="container">
+    <image class="container-bg" src="/images/bg.jpg" mode="scaleToFill"></image>
+    <view class="title">
+        <image class="avatar" src="{{userInfo.avatarUrl}}" mode="scaleToFill" wx:if="{{hasUserInfo}}"></image>
+        <image class="avatar" src="/images/user@3x.png" mode="scaleToFill" wx:else></image>
+        <view class="tip">请选择用餐人数</view>
+    </view>
+    <view class="number-box">
+        <view class="number-row" wx:for="{{[0, 1, 2, 3]}}"  wx:for-item="row" wx:key="{{row}}">
+            <view
+                    class="number-item {{(row * 4 + col) === peopleNumber ? 'active' : ''}}"
+                    data-number="{{row * 4 + col}}"
+                    bindtap="handleNumberClick"
+                    wx:for="{{[1, 2, 3, 4]}}"
+                    wx:for-item="col" wx:key="{{col}}"
+            >
+                {{row * 4 + col}}人
+            </view>
+        </view>
+
+        <view class="btn-ok" bindtap="handleOkClick">
+            确认
+        </view>
+    </view>
+</view>

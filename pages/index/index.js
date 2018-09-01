@@ -89,14 +89,14 @@ Page({
     },
 
     // 带菜按钮点击事件
-    handleOrder: function (e) {
+    handleOrderClick: function (e) {
         // 多人、单人 multiple single
         const {type} = e.currentTarget.dataset;
 
         wx.setStorageSync('orderType', type);
 
         wx.navigateTo({
-            url: '/pages/dishes/dishes'
+            url: '/pages/people-number/people-number'
         })
     },
 

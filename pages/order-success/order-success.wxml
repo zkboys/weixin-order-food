@@ -1,0 +1,35 @@
+<view class="order-success-container">
+    <view class="success-tip">
+        <image src="/images/order-success@3x.png"></image>
+        <view>下单成功，感谢您的光临！</view>
+    </view>
+    <view class="title">
+        已下单（{{dishTotalCount}}）
+    </view>
+    <view class="desk-number">
+        <text>下单时间：{{orderTime}}</text>
+        <text>桌号：{{deskNum}}</text>
+    </view>
+    <view class="dish-list">
+        <view class="dish-item" wx:for="{{dishes}}" wx:for-item="dish" wx:key="{{dish.id}}">
+            <view class="dish-msg">
+                <text class="dish-name">{{dish.name}}</text>
+                <text class="dish-unit">/{{dish.unit}}</text>
+            </view>
+            <view class="dish-money">
+                <text class="money-prefix">￥</text>
+                <text>{{dish.priceStr}}</text>
+                x
+                <text>{{dish.count}}</text>
+            </view>
+        </view>
+    </view>
+    <view class="dish-total">
+        小计：{{dishTotalPriceStr}}
+    </view>
+    <view class="reorder" bindtap="handleReOrder">
+        继续点餐
+    </view>
+</view>
+
+

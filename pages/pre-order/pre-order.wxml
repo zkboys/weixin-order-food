@@ -1,0 +1,44 @@
+<view class="pre-order-container">
+    <view class="title">
+        待下单（{{dishTotalCount}}）
+    </view>
+    <view class="desk-number">
+        桌号：{{deskNum}}
+    </view>
+    <view class="dish-list">
+        <view class="dish-item" wx:for="{{dishes}}" wx:for-item="dish" wx:key="{{dish.id}}">
+            <view class="dish-msg">
+                <text class="dish-name">{{dish.name}}</text>
+                <text class="dish-unit">/{{dish.unit}}</text>
+            </view>
+            <view class="dish-money">
+                <text class="money-prefix">￥</text>
+                <text>{{dish.priceStr}}</text>
+                x
+                <text>{{dish.count}}</text>
+            </view>
+        </view>
+    </view>
+    <view class="dish-total">
+        小计：{{dishTotalPriceStr}}
+    </view>
+    <view class="people-number">
+        <text class="label">人数：</text>
+        <text class="value">{{peopleNumber}}</text>
+    </view>
+    <view class="remark">
+        <text class="label">备注：</text>
+        <input value="{{remark}}" cursor-spacing="50" bindinput="handleInputRemark" placeholder="给商家留言，可填写注意事项，或特殊要求"/>
+    </view>
+    <view class="nav-bar">
+        <view class="msg">
+            <text class="price money">{{dishTotalPriceStr}}</text>
+            <text class="price">元</text>
+        </view>
+        <view class="btn" bindtap="handleSubmit">
+            提交订单
+        </view>
+    </view>
+</view>
+
+

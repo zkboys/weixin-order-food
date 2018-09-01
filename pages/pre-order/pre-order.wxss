@@ -1,0 +1,136 @@
+.pre-order-container{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-weight: normal;
+    background-color: rgba(246,246,246,1);
+}
+
+.title {
+    padding: 30rpx 0;
+    margin-top: 15rpx;
+    color: #333333;
+    font-size: 28rpx;
+    text-align: center;
+    background: #fff;
+}
+
+.desk-number {
+    padding-right: 30rpx;
+    padding-bottom: 10rpx;
+    color: #A1A1A1;
+    font-size: 24rpx;
+    background: #fff;
+    text-align: right;
+    border-bottom: 1rpx solid #DFE2E5;
+}
+
+.dish-list{
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-grow: 1;
+    background: #fff;
+}
+
+.dish-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25rpx 30rpx;
+}
+
+.dish-msg {
+    flex-grow: 1;
+    font-size: 28rpx;
+}
+
+.dish-name{
+    color: #333;
+}
+
+.dish-unit{
+    color: #A1A1A1;
+}
+
+.dish-money {
+    flex-basis: 150rpx;
+    flex-shrink: 0;
+    font-size: 20rpx;
+    color: #333;
+    text-align: right;
+}
+
+.money-prefix {
+    color: #A1A1A1;
+}
+
+.dish-total{
+    margin-top: 30rpx;
+    margin-bottom: 30rpx;
+    padding-right: 30rpx;
+    font-size: 24rpx;
+    color: #ED3E39;
+    text-align: right;
+}
+.people-number{
+    padding: 30rpx;
+    background: #fff;
+    border-bottom: 1rpx solid #DFE2E5;
+    font-size: 28rpx;
+    color: #333;
+}
+
+.people-number .label{
+    color: #A1A1A1;
+}
+
+.remark{
+    display: flex;
+    align-items: center;
+    padding: 30rpx;
+    margin-bottom: 50rpx;
+    background: #fff;
+    font-size: 28rpx;
+    color: #A1A1A1;
+}
+
+.remark .label {
+    flex-basis: 100rpx;
+    flex-shrink: 0;
+}
+
+.remark input{
+    flex-grow: 1;
+    color: #333;
+}
+
+.nav-bar {
+    display: flex;
+    flex-basis: 104rpx;
+    flex-shrink: 0;
+    line-height: 104rpx;
+    z-index: 999;
+}
+
+.nav-bar .msg{
+    position: relative;
+    flex-grow: 1;
+    padding-left: 180rpx;
+    font-size: 32rpx;
+    color: #fff;
+    background: #343C3F;
+}
+
+.nav-bar .btn{
+    flex-basis: 250rpx;
+    flex-shrink: 0;
+    background: #ED3E39;
+    font-size: 32rpx;
+    color: #fff;
+    text-align: center;
+}
+
+.money {
+    color: #ED3E39;
+    margin-right: 10rpx;
+}
