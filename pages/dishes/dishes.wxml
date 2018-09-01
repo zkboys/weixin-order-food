@@ -118,7 +118,7 @@
     </view>
     <view class="nav-bar">
         <view class="msg" bindtap="toggleCart">
-            <view class="cart-icon">
+            <view class="cart-icon" animation="{{cartAnimation}}">
                 <view class="badge">{{cartTotalCount}}</view>
                 <image src="/images/shop@3x.png" mode="scaleToFill"/>
             </view>
@@ -168,12 +168,25 @@
                                 mode="scaleToFill"
                                 bindtap="addCart"
                                 data-id="{{item.id}}"
+                                data-type="inCart"
                         />
                     </view>
                 </view>
                 <!-- 占位 -->
                 <view style="height: 200rpx"></view>
             </view>
+        </view>
+    </view>
+    <view
+            wx:for="{{pointCount}}"
+            wx:key="{{index}}"
+            class="animation-point-container {{pointAnimations[index].isAnimating ? 'show' : ''}}"
+            animation="{{pointContainerAnimations[index].animation}}"
+    >
+        <view
+                class="animation-point"
+                animation="{{pointAnimations[index].animation}}">
+
         </view>
     </view>
 </view>

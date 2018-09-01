@@ -15,7 +15,8 @@ Page({
         activeCategoryId: '', // 菜品分类中，当前选中的分类
         scrollCategoryId: '', // 菜品列表中，当前滚动到的分类
         blockHeight: 500, // 菜品列表的高度，计算左侧选中分类时用到
-        blockTop: 100, // 菜品列表滚动条距头部距离，计算左侧选中分类时用到
+        blockTop: 100, // 菜品列表距离头部距离，计算左侧选中分类时用到
+        listScrollTop: 0, // 菜品列表滚动距离
 
         cartDataSource: [],
         cartTotalCount: 0,
@@ -23,6 +24,16 @@ Page({
         cartTotalPriceStr: '￥0',
 
         disableOkButton: true,
+
+        // 动画相关
+        dishListLeft: 0,
+        dishListTop: 0,
+        cartAnimation: {},
+        pointAnimations: [],
+        pointContainerAnimations: [],
+        pointCount: 5, // 动画所需红点个数
+        pointDuration: 500, // 红点动画持续时间
+        cartBadgePosition: {},
     },
 
     // 同步购物车数据到当前的data中
@@ -131,12 +142,33 @@ Page({
     onReady: function () {
         // scroll-view 需要设置高度
         const query = wx.createSelectorQuery();
-
         query.select('.dish-block').boundingClientRect();
         query.exec((res) => {
             this.setData({
                 blockHeight: res[0].height,
                 blockTop: res[0].top,
+            });
+        });
+
+        // 获取 dish-list 的 let top 计算加号精确位置时，用到
+        const queryDishList = wx.createSelectorQuery();
+        queryDishList.select('.dish-list').boundingClientRect();
+        queryDishList.exec((res) => {
+            this.setData({
+                dishListLeft: res[0].left,
+                dishListTop: res[0].top,
+            });
+        });
+
+        // 获取 购物车 badge 位置
+        const queryBadge = wx.createSelectorQuery();
+        queryBadge.select('.badge').boundingClientRect();
+        queryBadge.exec((res) => {
+            this.setData({
+                cartBadgePosition: {
+                    left: res[0].left,
+                    top: res[0].top,
+                },
             });
         })
     },
@@ -163,6 +195,9 @@ Page({
         }
 
         this.scrollST = setTimeout(() => {
+            const {scrollTop} = e.detail;
+            this.setData({listScrollTop: scrollTop});
+
             const {blockHeight, blockTop} = this.data;
 
             const query = wx.createSelectorQuery();
@@ -232,13 +267,21 @@ Page({
     },
 
     addCart: function (e) {
-        const dishId = e.currentTarget.dataset.id;
-        const {dishes} = this.data;
+        const {id: dishId} = e.currentTarget.dataset;
+        const {dishes, pointDuration} = this.data;
         const dish = dishes.find(item => item.id === dishId);
 
         cart.add(dish);
 
         this.syncCart();
+
+        // 购物车动画 红点落入时启动
+        setTimeout(() => {
+            this.playCartAnimation();
+        }, pointDuration);
+
+        // 红点进入购物车动画
+        this.playAddPointAnimation(e);
     },
 
     minusCart: function (e) {
@@ -263,5 +306,114 @@ Page({
         wx.navigateTo({
             url: '/pages/pre-order/pre-order',
         })
+    },
+
+    playCartAnimation: function () {
+        const duration = 200;
+        const animation = wx.createAnimation({
+            duration,
+            timingFunction: 'ease',
+        });
+
+        animation.scale(1.1, 1.1).step();
+
+        this.setData({
+            cartAnimation: animation.export()
+        });
+
+        // 官方：iOS/Android 6.3.30 通过 step() 分隔动画，只有第一步动画能生效
+        setTimeout(() => {
+            animation.scale(1, 1).step();
+
+            this.setData({
+                cartAnimation: animation.export()
+            });
+        }, duration);
+    },
+
+    playAddPointAnimation: function (e) {
+        const {type} = e.currentTarget.dataset;
+        const {offsetLeft, offsetTop} = e.currentTarget;
+        const {
+            listScrollTop,
+            dishListLeft,
+            dishListTop,
+            pointAnimations,
+            pointContainerAnimations,
+            pointCount,
+            pointDuration,
+            cartBadgePosition,
+        } = this.data;
+
+        let initLeft = offsetLeft + dishListLeft;
+        let initTop = offsetTop + dishListTop - listScrollTop;
+
+        // fixme 购物车内部添加按钮，初始位置
+        if (type === 'inCart') {
+
+            return;
+        }
+
+        // 查找一个没有进行动画的红点节点
+        let id = 0;
+        for (let i = 0; i < pointCount; i++) {
+            if (!pointAnimations[i] || !pointAnimations[i].isAnimating) {
+                id = i;
+                break;
+            }
+        }
+
+        // 内部函数，执行动画
+        const doAnimations = (left, top, duration) => {
+            if (!pointAnimations[id]) pointAnimations[id] = {};
+            if (!pointContainerAnimations[id]) pointContainerAnimations[id] = {};
+
+            // 红点自由落体运动，相对于 point-container
+            const pointAnimation = wx.createAnimation({
+                duration,
+                timingFunction: 'ease-in',
+            });
+
+            pointAnimation.top(top - initTop).step();
+
+            pointAnimations[id].animation = pointAnimation.export();
+
+            // 红点容器水平匀速运动
+            const containerAnimation = wx.createAnimation({
+                duration,
+                timingFunction: 'ease-out', // 使用 linear 类抛物线， ease-out弧度大，效果好一些
+            });
+
+
+            // 加入 opacity 视觉上弱化动画开始时，卡顿现象
+            if (duration === 0) {
+                containerAnimation.opacity(0).top(top).left(left).step();
+            } else {
+                containerAnimation.opacity(1).left(left).step();
+            }
+
+            pointContainerAnimations[id].animation = containerAnimation.export();
+
+            this.setData({
+                pointAnimations,
+                pointContainerAnimations,
+            });
+        };
+
+        // 红点初始化为点击加号位置
+        doAnimations(initLeft, initTop, 0);
+
+        // 开始动画
+        const waitTime = 20; // 等待初始化位置设置成功时间
+        pointAnimations[id].isAnimating = true;
+        setTimeout(() => {
+            doAnimations(cartBadgePosition.left, cartBadgePosition.top, pointDuration);
+        }, waitTime);
+
+        // 动画结束
+        setTimeout(() => {
+            pointAnimations[id].isAnimating = false;
+            doAnimations(-50, -50, 0);
+        }, waitTime + pointDuration);
     },
 });

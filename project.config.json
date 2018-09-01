@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 6,
+			"current": 7,
 			"list": [
 				{
 					"id": 0,
@@ -81,6 +81,13 @@
 					"id": -1,
 					"name": "order-detail",
 					"pathName": "pages/order-detail/order-detail",
+					"query": "scene=storeId%3d1%26deskNum%3d01",
+					"scene": "1047"
+				},
+				{
+					"id": -1,
+					"name": "dishes",
+					"pathName": "pages/dishes/dishes",
 					"query": "scene=storeId%3d1%26deskNum%3d01",
 					"scene": "1047"
 				}

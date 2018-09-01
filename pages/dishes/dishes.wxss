@@ -298,3 +298,22 @@
     flex-shrink: 0;
     display: inline-flex;
 }
+
+.animation-point-container {
+    opacity: 0;
+    position: absolute;
+    top: -50rpx;
+    width: 38rpx;
+    height: 38rpx;
+    z-index: 999;
+}
+.animation-point{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 38rpx;
+    height: 38rpx;
+    border-radius: 50%;
+    background: #ED3E39;
+    z-index: 999;
+}

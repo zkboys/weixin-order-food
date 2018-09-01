@@ -37,7 +37,6 @@ Page({
     onLoad: function (options) {
         const {id} = options;
         // TODO 基于订单id 查询订单数据
-        console.log(options);
 
     },
 
