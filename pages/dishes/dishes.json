@@ -1,5 +1,6 @@
 {
   "disableScroll": true,
+  "navigationBarTitleText": "点餐",
   "usingComponents": {
     "title-bar": "../../components/title-bar/title-bar"
   }

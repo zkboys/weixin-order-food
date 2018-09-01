@@ -1,3 +1,4 @@
 {
-  "disableScroll": true
+  "disableScroll": true,
+  "navigationBarTitleText": "我的订单"
 }

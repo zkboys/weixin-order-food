@@ -1,5 +1,6 @@
 {
   "disableScroll": true,
+  "navigationBarTitleText": "菜品详情",
   "usingComponents": {
     "title-bar": "../../components/title-bar/title-bar"
   }
