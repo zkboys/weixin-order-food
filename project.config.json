@@ -33,14 +33,14 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 7,
+			"current": 0,
 			"list": [
 				{
 					"id": 0,
-					"name": "1047: 扫描小程序码 scene=storeId=1&deskNum=01",
+					"name": "1011: 扫描二维码 scene=storeId=1&deskNo=01",
 					"pathName": "pages/index/index",
-					"query": "scene=storeId%3d1%26deskNum%3d01",
-					"scene": "1047"
+					"query": "scene=storeId%3d1%26deskNo%3d01",
+					"scene": "1011"
 				},
 				{
 					"id": 1,
@@ -74,21 +74,21 @@
 					"id": -1,
 					"name": "history-orders",
 					"pathName": "pages/history-orders/history-orders",
-					"query": "scene=storeId%3d1%26deskNum%3d01",
+					"query": "scene=storeId%3d1%26deskNo%3d01",
 					"scene": "1047"
 				},
 				{
 					"id": -1,
 					"name": "order-detail",
 					"pathName": "pages/order-detail/order-detail",
-					"query": "scene=storeId%3d1%26deskNum%3d01",
+					"query": "scene=storeId%3d1%26deskNo%3d01",
 					"scene": "1047"
 				},
 				{
 					"id": -1,
 					"name": "dishes",
 					"pathName": "pages/dishes/dishes",
-					"query": "scene=storeId%3d1%26deskNum%3d01",
+					"query": "scene=storeId%3d1%26deskNo%3d01",
 					"scene": "1047"
 				}
 			]

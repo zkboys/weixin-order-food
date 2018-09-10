@@ -1,22 +1,138 @@
 //app.js
-wx.test = '可以扩展wx';
+const {parseQueryString} = require('./utils/util');
+console.log(App);
 App({
-    // onLaunch 小程序启动的时候出发，再次打开并出发
+    // onLaunch 小程序启动的时候触发，再次打开并不触发
+    // fixme onShow 页面再次显示触发，调用扫码、地图等，再次切换回来也触发
+    // onLaunch: function () {
+    // },
     onShow: function (options) {
-        // 扫码超过时间 清空数据
-        const scanQRCodeTime = wx.getStorageSync('scanQRCodeTime');
-        // fixme 修改这个时间限制，或者从后台设置中获取
-        const time = 2 * 60 * 60 * 10000;
+        this.getSettings();
+        // 登录
+        if (!this.globalData.token) {
+            wx.login({
+                success: res => {
+                    // TODO 发送 res.code 到后台换取 openId, sessionKey, unionId
 
-        if (Date.now() - scanQRCodeTime > time) {
-            // 点餐中状态设置为false，需要重新扫码，发起点餐流程
-            wx.setStorageSync('ordering', false);
+                    // 登录成功之后，设置一些登录信息，比如token等
+                    this.globalData.token = 'test-token';
+
+                    // 登录成功之后，进行初始化
+                    this.init(options);
+                }
+            });
+        } else {
+            this.init(options);
+        }
+    },
+
+    onHide: function () {
+        console.log('app.js onHide');
+        wx.showToast({title: 'app.js onHide'});
+
+        wx.setStorageSync('innerScan', false);
+    },
+
+    init: function (options) {
+        // 要启动的页面path
+        const {scene: sceneType, path} = options;
+
+        const innerScan = wx.getStorageSync('innerScan');
+
+        // TODO 进入方式判断
+        // const scanIn = '' + sceneType === '1011' || innerScan;
+        //
+        // // 非扫码方式进入, 统一跳到首页，提示扫码
+        // if (!scanIn) {
+        //     wx.removeStorageSync('storeId');
+        //     wx.removeStorageSync('deskNo');
+        //     this.toIndex(path);
+        //     if (this.initReadyCallBack) {
+        //         this.initReadyCallBack();
+        //     }
+        //     return;
+        // }
+
+        // TODO 如何获取二维码中参数
+        // 二维码中携带的参数
+        const scene = options && options.query && options.query.scene;
+
+        // 参数存在 进入初始化流程
+        let storeId;
+        let deskNo;
+
+        // 存在参数，优先从参数中获取storeId deskNo
+        if (scene) {
+            const params = parseQueryString(decodeURIComponent(options.query.scene));
+            storeId = params.storeId;
+            deskNo = params.deskNo;
+
+            // 缓存storeId deskNo
+            wx.setStorageSync('storeId', storeId);
+            wx.setStorageSync('deskNo', deskNo);
+
+            // 记录获取到storeId deskNo时间
+            wx.setStorageSync('scanTime-' + storeId + deskNo, Date.now());
+        } else {
+            // 参数不存在（非扫码进入），从存储中获取storeId deskNo
+            storeId = wx.getStorageSync('storeId');
+            deskNo = wx.getStorageSync('deskNo');
+
+            if (storeId && deskNo && this.isExpired()) {
+                storeId = null;
+                deskNo = null;
+                wx.setStorageSync('storeId', storeId);
+                wx.setStorageSync('deskNo', deskNo);
+            }
         }
 
-        // 非扫码进入其他页面，并且桌号不存在，跳转到首页，提示用户扫码
-        const {path} = options;
-        const ordering = wx.getStorageSync('ordering'); // 正在点餐中
+        // 如果storeId deskNo不存在，部分页面要跳转到提示扫码页面
+        if (!storeId && !deskNo) {
+            this.toIndex(path);
+        } else {
+            this.initStoreMessage();
+        }
+    },
 
+    // 初始化点餐相关数据
+    initStoreMessage: function (callBack) {
+        const storeId = wx.getStorageSync('storeId');
+        const deskNo = wx.getStorageSync('deskNo');
+        // TODO 基于 storeId 获取店铺信息
+        const store = {
+            logo: '/images/logo.png',
+            name: '望湘园金源时代店',
+        };
+        wx.setStorageSync('store', store);
+
+        // TODO 基于 storeId deskNo 获取结账方式
+        const checkOutType = 'before'; // before 先结账 after 后结账
+        wx.setStorageSync('checkOutType', checkOutType);
+
+        // TODO 根据 storeId deskNo 查询当前微信用户是否有未完成订单（未付款的）
+        // 后付款用户，会存在未完成订单，需要跳转到首页，提示加菜、结账等
+        let hasUncompletedOrder = false;
+        wx.setStorageSync('hasUncompletedOrder', hasUncompletedOrder);
+        if (hasUncompletedOrder) {
+            // TODO 根据未完成订单恢复购物车数据、点餐人数，然后跳转到首页，提示加菜、结账
+        }
+
+        // TODO 异步操作
+        if (this.initReadyCallBack) {
+            this.initReadyCallBack();
+        }
+    },
+
+    // 是否过期，提示重新扫码
+    isExpired: function () {
+        const storeId = wx.getStorageSync('storeId');
+        const deskNo = wx.getStorageSync('deskNo');
+        const lastScanTime = wx.getStorageSync('scanTime-' + storeId + deskNo);
+        const expireTime = 1000 * 60 * 60 * 5; // fixme 5 小时后过期
+        return Date.now() - lastScanTime > expireTime;
+    },
+
+    toIndex: function (currentPath) {
         // 不需要跳转的页面
         const ignorePaths = [
             'pages/index/index',
@@ -24,25 +140,15 @@ App({
             'pages/order-detail/order-detail',
         ];
 
-        if (ignorePaths.indexOf(path) === -1 && !ordering) {
+        if (ignorePaths.indexOf(currentPath) === -1) {
             wx.reLaunch({
-                url: 'pages/index/index'
+                url: '/pages/index/index'
             })
         }
+    },
 
-        // 登录
-        wx.login({
-            success: res => {
-                // TODO 发送 res.code 到后台换取 openId, sessionKey, unionId
-
-                // 登录成功之后，设置一些登录信息，比如token等
-                this.globalData.token = 'test-token';
-                if (this.loginReadyCallBack) {
-                    this.loginReadyCallBack();
-                }
-            }
-        });
-
+    // 启动时，获取一些设置信息
+    getSettings: function () {
         // 获取用户信息
         wx.getSetting({
             success: res => {

@@ -8,7 +8,7 @@ Page({
      */
     data: {
         orderTime: '',
-        deskNum: '',
+        deskNo: '',
         dishes: [],
         dishTotalCount: 0,
         dishTotalPrice: 0,
@@ -27,7 +27,7 @@ Page({
         });
 
         this.setData({
-            deskNum: wx.getStorageSync('deskNum'),
+            deskNo: wx.getStorageSync('deskNo'),
             dishes: cart.getDataSource(),
             dishTotalCount: cart.getTotalCount(),
             dishTotalPrice,

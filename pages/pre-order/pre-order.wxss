@@ -9,7 +9,6 @@
 .title {
     position: relative;
     padding: 30rpx 0;
-    margin-top: 15rpx;
     color: #333333;
     font-size: 28rpx;
     text-align: center;
@@ -57,7 +56,7 @@
 .dish-money {
     flex-basis: 150rpx;
     flex-shrink: 0;
-    font-size: 20rpx;
+    font-size: 26rpx;
     color: #333;
     text-align: right;
 }
@@ -70,7 +69,7 @@
     margin-top: 30rpx;
     margin-bottom: 30rpx;
     padding-right: 30rpx;
-    font-size: 24rpx;
+    font-size: 28rpx;
     color: #ED3E39;
     text-align: right;
 }
@@ -83,7 +82,16 @@
 }
 
 .people-number .label{
+    display: inline-block;
+    width: 100rpx;
     color: #A1A1A1;
+}
+
+.people-number .down-arrow{
+    width: 16rpx;
+    height: 10rpx;
+    float: right;
+    margin-top: 20rpx;
 }
 
 .remark{
@@ -136,3 +144,5 @@
     color: #ED3E39;
     margin-right: 10rpx;
 }
+
+

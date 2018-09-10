@@ -2,33 +2,9 @@
     <view class="top">
         <title-bar title="今日推荐"/>
         <view class="banner">
-            <view class="banner-item">
+            <view class="banner-item" wx:for="{{recommendDishes}}" wx:key="{{item.id}}">
                 <image src="/images/img2@3x.png" mode="scaleToFill"/>
-                <view class="banner-item-tip">丹东大螃蟹就是好吃</view>
-            </view>
-            <view class="banner-item">
-                <image src="/images/img2@3x.png" mode="scaleToFill"/>
-                <view class="banner-item-tip">大螃蟹</view>
-            </view>
-            <view class="banner-item">
-                <image src="/images/img2@3x.png" mode="scaleToFill"/>
-                <view class="banner-item-tip">丹东大螃蟹</view>
-            </view>
-            <view class="banner-item">
-                <image src="/images/img2@3x.png" mode="scaleToFill"/>
-                <view class="banner-item-tip">丹东大螃蟹</view>
-            </view>
-            <view class="banner-item">
-                <image src="/images/img2@3x.png" mode="scaleToFill"/>
-                <view class="banner-item-tip">丹东大螃蟹</view>
-            </view>
-            <view class="banner-item">
-                <image src="/images/img2@3x.png" mode="scaleToFill"/>
-                <view class="banner-item-tip">丹东大螃蟹</view>
-            </view>
-            <view class="banner-item">
-                <image src="/images/img2@3x.png" mode="scaleToFill"/>
-                <view class="banner-item-tip">丹东大螃蟹</view>
+                <view class="banner-item-tip">{{item.name}}</view>
             </view>
         </view>
     </view>
@@ -50,7 +26,7 @@
                 {{item.name}}
             </view>
             <!--占位，防止购物车图标遮挡。dish-nav: padding-bottom 无效-->
-            <view style="height: 100rpx"></view>
+            <view style="height: 100rpx;border: none"></view>
         </scroll-view>
         <scroll-view
                 style="height: {{blockHeight}}px"
@@ -69,51 +45,33 @@
                     <image class="dish-image" bindtap="toDishDetail" src="/images/img2@3x.png" mode="scaleToFill"/>
                     <view class="dish-msg-block">
                         <view class="title">{{dish.name}}</view>
-                        <view class="price">
-                            <text class="money">{{dish.priceStr}}</text>
-                            <text class="unit">/{{dish.unit}}</text>
-                        </view>
-                        <view class="dish-operator-button">
-                            <image
-                                    wx:if="{{dish.count > 0}}"
-                                    class="minus"
-                                    src="/images/minus@3x.png"
-                                    mode="scaleToFill"
-                                    bindtap="minusCart"
-                                    data-id="{{dish.id}}"
-                            />
-                            <view wx:if="{{dish.count > 0}}" class="count">{{dish.count}}</view>
-                            <image
-                                    class="plus"
-                                    src="/images/add@3x.png"
-                                    mode="scaleToFill"
-                                    bindtap="addCart"
-                                    data-id="{{dish.id}}"
-                            />
+                        <view class="price-and-button">
+                            <view class="price">
+                                <text class="money">{{dish.priceStr}}</text>
+                                <text class="unit">/{{dish.unit}}</text>
+                            </view>
+                            <view class="dish-operator-button">
+                                <image
+                                        wx:if="{{dish.count > 0}}"
+                                        class="minus"
+                                        src="/images/minus@3x.png"
+                                        mode="scaleToFill"
+                                        bindtap="minusCart"
+                                        data-id="{{dish.id}}"
+                                />
+                                <view wx:if="{{dish.count > 0}}" class="count">{{dish.count}}</view>
+                                <image
+                                        class="plus"
+                                        src="/images/add@3x.png"
+                                        mode="scaleToFill"
+                                        bindtap="addCart"
+                                        data-id="{{dish.id}}"
+                                />
+                            </view>
                         </view>
                     </view>
                 </view>
             </block>
-
-
-            <view id="dc04" class="dish-category-title">
-                <title-bar titleStyle="padding-bottom: 0" title="我是最后一个"/>
-            </view>
-            <view class="dish-list-item">
-                <image class="dish-image" bindtap="toDishDetail" src="/images/img2@3x.png" mode="scaleToFill"/>
-                <view class="dish-msg-block">
-                    <view class="title">镇店之宝（3-6人） 原价400元</view>
-                    <view class="price">
-                        <text class="money">￥365.00</text>
-                        <text class="unit">/分</text>
-                    </view>
-                    <view class="dish-operator-button">
-                        <image class="minus" src="/images/minus@3x.png" mode="scaleToFill"/>
-                        <view class="count">1</view>
-                        <image class="plus" src="/images/add@3x.png" mode="scaleToFill"/>
-                    </view>
-                </view>
-            </view>
         </scroll-view>
     </view>
     <view class="nav-bar">

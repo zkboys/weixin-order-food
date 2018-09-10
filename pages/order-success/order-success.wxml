@@ -8,7 +8,7 @@
     </view>
     <view class="desk-number">
         <text>下单时间：{{orderTime}}</text>
-        <text>桌号：{{deskNum}}</text>
+        <text>桌号：{{deskNo}}</text>
     </view>
     <view class="dish-list">
         <view class="dish-item" wx:for="{{dishes}}" wx:for-item="dish" wx:key="{{dish.id}}">

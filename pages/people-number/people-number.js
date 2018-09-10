@@ -8,7 +8,7 @@ Page({
     data: {
         userInfo: {},
         hasUserInfo: false,
-        peopleNumber: 2,
+        peopleNumber: '',
     },
 
     /**
@@ -26,16 +26,10 @@ Page({
     handleNumberClick: function (e) {
         const {number} = e.currentTarget.dataset;
         this.setData({peopleNumber: number});
-    },
 
-    handleOkClick: function(e) {
-        const {peopleNumber} = this.data;
-
-        wx.setStorageSync('peopleNumber', peopleNumber);
-
+        wx.setStorageSync('peopleNumber', number);
         wx.navigateTo({
             url: '/pages/dishes/dishes',
         })
-
-    }
+    },
 });

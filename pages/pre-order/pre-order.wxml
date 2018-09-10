@@ -2,7 +2,7 @@
     <view class="title">
         <text>待下单（{{dishTotalCount}})</text>
         <view class="desk-number">
-            桌号：{{deskNum}}
+            桌号：{{deskNo}}
         </view>
     </view>
     <view class="dish-list">
@@ -23,17 +23,19 @@
         小计：{{dishTotalPriceStr}}
     </view>
     <view class="people-number">
-        <text class="label">人数：</text>
-        <text class="value">{{peopleNumber}}</text>
+        <picker bindchange="handlePeopleNumberChange" value="{{peopleNumber -1}}" range="{{peopleNumbers}}">
+            <text class="label">人数：</text>
+            <text class="value">{{peopleNumber}}</text>
+            <image class="down-arrow" src="/images/down-arrow@3x.png" mode="scaleToFill"></image>
+        </picker>
     </view>
     <view class="remark">
         <text class="label">备注：</text>
-        <input value="{{remark}}" cursor-spacing="50" bindinput="handleInputRemark" placeholder="给商家留言，可填写注意事项，或特殊要求"/>
+        <input value="{{remark}}" cursor-spacing="30" bindinput="handleInputRemark" placeholder="给商家留言，可填写注意事项，或特殊要求"/>
     </view>
     <view class="nav-bar">
         <view class="msg">
             <text class="price money">{{dishTotalPriceStr}}</text>
-            <text class="price">元</text>
         </view>
         <view class="btn" bindtap="handleSubmit">
             提交订单

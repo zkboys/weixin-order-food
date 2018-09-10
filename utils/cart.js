@@ -1,20 +1,21 @@
-// 购物车
-let dataSource = wx.getStorageSync('cart') || [];
 
 // 同步本地存储
-function syncStorage() {
+function syncStorage(dataSource, storeId) {
     wx.setStorage({
-        key: 'cart',
+        key: storeId + '-cart',
         data: dataSource,
     })
 }
 
 module.exports = {
     getDataSource: function () {
-        return dataSource;
+        const storeId = wx.getStorageSync('storeId') || '';
+        return wx.getStorageSync(storeId + '-cart') || [];
     },
 
     add: function (data) {
+        const storeId = wx.getStorageSync('storeId') || '';
+        const dataSource = wx.getStorageSync(storeId + '-cart') || [];
         const existData = dataSource.find(item => item.id === data.id);
 
         if (existData) {
@@ -24,10 +25,12 @@ module.exports = {
             dataSource.push(data);
         }
 
-        syncStorage();
+        syncStorage(dataSource, storeId);
     },
 
     remove: function (data) {
+        const storeId = wx.getStorageSync('storeId') || '';
+        let dataSource = wx.getStorageSync(storeId + '-cart') || [];
         const existData = dataSource.find(item => item.id === data.id);
 
         if (existData && existData.count > 1) {
@@ -36,16 +39,19 @@ module.exports = {
             dataSource = dataSource.filter(item => item.id !== data.id);
         }
 
-        syncStorage();
+        syncStorage(dataSource, storeId);
     },
 
     clear: function () {
-        dataSource = [];
+        const storeId = wx.getStorageSync('storeId') || '';
+        let dataSource = [];
 
-        syncStorage();
+        syncStorage(dataSource, storeId);
     },
 
     getTotalCount: function () {
+        const storeId = wx.getStorageSync('storeId') || '';
+        const dataSource = wx.getStorageSync(storeId + '-cart') || [];
         let count = 0;
 
         dataSource.forEach(item => {
@@ -56,6 +62,8 @@ module.exports = {
     },
 
     getTotalPrice: function () {
+        const storeId = wx.getStorageSync('storeId') || '';
+        const dataSource = wx.getStorageSync(storeId + '-cart') || [];
         let price = 0;
 
         dataSource.forEach(item => {

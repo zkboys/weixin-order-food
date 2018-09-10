@@ -7,12 +7,13 @@ Page({
      * 页面的初始数据
      */
     data: {
-        deskNum: '',
+        deskNo: '',
         dishes: [],
         dishTotalCount: 0,
         dishTotalPrice: 0,
         dishTotalPriceStr: '￥0.00',
         peopleNumber: 0,
+        peopleNumbers: [],
         remark: '',
     },
 
@@ -27,13 +28,20 @@ Page({
             dish.priceStr = formatCurrency(dish.price, {prefix: ''});
         });
 
+        const peopleNumbers = [];
+        for (let i = 1; i <= 50; i++) {
+            peopleNumbers.push(i + ' 人');
+        }
+
+
         this.setData({
-            deskNum: wx.getStorageSync('deskNum'),
+            deskNo: wx.getStorageSync('deskNo'),
             dishes: cart.getDataSource(),
             dishTotalCount: cart.getTotalCount(),
             dishTotalPrice,
             dishTotalPriceStr: formatCurrency(dishTotalPrice),
             peopleNumber: wx.getStorageSync('peopleNumber'),
+            peopleNumbers,
         });
     },
 
@@ -41,7 +49,10 @@ Page({
         const {value} = e.detail;
         this.setData({remark: value});
     },
-
+    handlePeopleNumberChange: function (e) {
+        const peopleNumber = parseInt(e.detail.value) + 1;
+        this.setData({peopleNumber});
+    },
     handleSubmit: function () {
         const {remark} = this.data;
         // TODO 直接调用支付，支付成功之后，跳转到下单成功界面

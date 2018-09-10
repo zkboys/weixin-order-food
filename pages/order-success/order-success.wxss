@@ -36,7 +36,7 @@
     align-items: center;
     padding-right: 30rpx;
     padding-left: 30rpx;
-    padding-bottom: 10rpx;
+    padding-bottom: 20rpx;
     color: #A1A1A1;
     font-size: 24rpx;
     background: #fff;
@@ -73,7 +73,7 @@
 .dish-money {
     flex-basis: 150rpx;
     flex-shrink: 0;
-    font-size: 20rpx;
+    font-size: 26rpx;
     color: #333;
     text-align: right;
 }
@@ -86,7 +86,7 @@
     margin-top: 30rpx;
     margin-bottom: 30rpx;
     padding-right: 30rpx;
-    font-size: 24rpx;
+    font-size: 28rpx;
     color: #ED3E39;
     text-align: right;
 }

@@ -71,3 +71,8 @@
     margin-top: 18rpx;
     font-size: 30rpx;
 }
+
+.scan-qr-code{
+    width: 250rpx;
+    height: 250rpx;
+}

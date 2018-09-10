@@ -2,53 +2,56 @@
 //获取应用实例
 const app = getApp();
 const request = require('../../utils/request');
-const {parseQueryString} = require('../../utils/util');
 
 Page({
     data: {
+        hasUncompletedOrder: false,
         store: {},
-        deskNum: '', // 当前点餐桌号
-        showOrderButton: false, // 显示 单人点餐 多人同步点餐按钮
+        storeId: '',
+        deskNo: '', // 当前点餐桌号
+        showScanTip: false, // 显示提示扫码
+        showOrderButton: false, // 显示点餐按钮
+        showAddPayButton: false, // 显示加菜 结账按钮
         userInfo: {},
         hasUserInfo: false,
-        canIUse: wx.canIUse('button.open-type.getUserInfo')
-    },
-
-    getQRCodeParams: function (params) {
-        const {storeId, deskNum} = params;
-
-        if (deskNum) {
-            this.setData({deskNum, showOrderButton: true});
-            wx.setStorageSync('deskNum', deskNum);
-            wx.setStorageSync('scanQRCodeTime', Date.now());
-            wx.setStorageSync('ordering', true); // 正在点餐中
-        }
-
-        if (storeId) {
-            wx.setStorageSync('storeId', storeId);
-            // TODO 基于storeId 获取门店信息
-            const store = {
-                logo: '/images/logo.png',
-                name: '望湘园金源时代店',
-            };
-            this.setData({store});
-        }
+        canIUse: wx.canIUse('button.open-type.getUserInfo'),
     },
 
     onLoad: function (options) {
-        // 通过二维码扫描进入时，获取参数
-        // options 中的 scene 需要使用 decodeURIComponent 才能获取到生成二维码时传入的 scene
-        const scene = decodeURIComponent(options.scene);
-        this.getQRCodeParams(parseQueryString(scene));
+        console.log('index.js onLoad', options);
 
-
-        app.loginReadyCallBack = () => {
-            // 登录是异步的 ，需要使用callback方式
-            // 这个时候可以发送请求之类的了
-            // request.getOrderStatus({
-            //     url: '/getOrderStatus',
-            // })
+        let isInit = false;
+        app.initReadyCallBack = () => { // 初始化成功回调
+            this.init();
+            isInit = true;
         };
+        if (!isInit) this.init();
+    },
+
+    init: function (options) {
+        const hasUncompletedOrder = wx.getStorageSync('hasUncompletedOrder');
+        const store = wx.getStorageSync('store');
+        const storeId = wx.getStorageSync('storeId');
+        const deskNo = wx.getStorageSync('deskNo'); // 当前点餐桌号
+        const showScanTip = !storeId && !deskNo;
+        const showAddPayButton = hasUncompletedOrder;
+        const showOrderButton = storeId && deskNo && !showAddPayButton;
+
+        this.setData({
+            hasUncompletedOrder,
+            store,
+            storeId,
+            deskNo,
+            showScanTip,
+            showAddPayButton,
+            showOrderButton,
+        });
+
+        this.initUserInfo();
+    },
+
+    // 用户已经授权，获取用户信息
+    initUserInfo: function () {
         if (app.globalData.userInfo) {
             this.setData({
                 userInfo: app.globalData.userInfo,
@@ -76,6 +79,8 @@ Page({
             })
         }
     },
+
+    // 点击头像，如果未授权，弹出授权询问框
     getUserInfo: function (e) {
         if (e.detail.userInfo) {
             app.globalData.userInfo = e.detail.userInfo;
@@ -89,7 +94,7 @@ Page({
         this.toHistoryOrders();
     },
 
-    // 带菜按钮点击事件
+    // 两个点餐按钮点击事件
     handleOrderClick: function (e) {
         // 多人、单人 multiple single
         const {type} = e.currentTarget.dataset;
@@ -99,6 +104,43 @@ Page({
         wx.navigateTo({
             url: '/pages/people-number/people-number'
         });
+    },
+
+    // 扫描二维码点餐
+    handleScanQRCodeClick: function (e) {
+        wx.scanCode({
+            scanType: ['qrCode'],
+            success: (data) => {
+                console.log('success');
+                console.log(data);
+
+                // TODO 获取扫描结果中的storeId deskNo
+                const storeId = '1';
+                const deskNo = '1';
+                wx.setStorageSync('storeId', storeId);
+                wx.setStorageSync('deskNo', deskNo);
+                wx.setStorageSync('innerScan', true);
+
+                app.initStoreMessage(() => {
+                    this.init();
+                });
+
+                this.setData({
+                    showScanTip: false,
+                    showAddPayButton: false,
+                    showOrderButton: true,
+                });
+            }
+        });
+    },
+    // 加菜按钮点击事件
+    handleAddDishClick: function (e) {
+        // TODO
+    },
+
+    // 结账按钮点击事件
+    handlePayClick: function (e) {
+        // TODO
     },
 
     // 跳转到用户历史订单

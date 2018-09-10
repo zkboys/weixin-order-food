@@ -17,15 +17,15 @@
             <view>您好，欢迎光临！</view>
         </view>
     </view>
-    <view class="store-info" wx:if="{{showOrderButton}}">
+    <view class="store-info" wx:if="{{showOrderButton || showAddPayButton}}">
         <image class="store-logo" src="/images/logo@3x.png" mode="cover"></image>
         <text class="store-name">{{store.name}}</text>
-        <text class="store-desk" wx:if="{{showOrderButton}}">桌位：{{deskNum}}</text>
-        <text class="store-desk" wx:else></text>
+        <text class="store-desk">桌位：{{deskNo}}</text>
     </view>
-    <view class="scan-tip" wx:else>
-        TODO 提示用户使用微信扫描桌面二维码进行点餐
+    <view class="scan-tip" wx:if="{{showScanTip}}">
+        <image bindtap="handleScanQRCodeClick" class="scan-qr-code" src="/images/scan-qr-code@3x.png" mode="scaleToFill"/>
     </view>
+    <view wx:if="{{showScanTip}}"></view><!--用来站位的-->
 
     <view class="btn-operator-group" wx:if="{{showOrderButton}}">
         <view class="btn-operator" bindtap="handleOrderClick" data-type="single">
@@ -35,6 +35,17 @@
         <view class="btn-operator" bindtap="handleOrderClick" data-type="multiple">
             <image class="order" src="/images/user-multiple@3x.png" mode="cover"></image>
             <text class="order-text">多人同步点餐</text>
+        </view>
+    </view>
+
+    <view class="btn-operator-group" wx:if="{{showAddPayButton}}">
+        <view class="btn-operator" bindtap="handleAddDishClick">
+            <image class="order" src="/images/order@3x.png" mode="cover"></image>
+            <text class="order-text">加菜</text>
+        </view>
+        <view class="btn-operator" bindtap="handlePayClick">
+            <image class="order" src="/images/btn-bill@3x.png" mode="cover"></image>
+            <text class="order-text">结账</text>
         </view>
     </view>
 </view>

@@ -17,9 +17,5 @@
                 {{row * 4 + col}}人
             </view>
         </view>
-
-        <view class="btn-ok" bindtap="handleOkClick">
-            确认
-        </view>
     </view>
 </view>
