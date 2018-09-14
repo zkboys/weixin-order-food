@@ -21,19 +21,28 @@ Page({
     onLoad: function (options) {
 
         const dishTotalPrice = cart.getTotalPrice();
+        const dishTotalCount = cart.getTotalCount();
         const dishes = cart.getDataSource();
+        const deskNo = wx.getStorageSync('deskNo');
+        const dishTotalPriceStr = formatCurrency(dishTotalPrice);
+        const orderTime = formatTime(new Date());
+
         dishes.forEach(dish => {
             dish.priceStr = formatCurrency(dish.price, {prefix: ''});
         });
 
         this.setData({
-            deskNo: wx.getStorageSync('deskNo'),
-            dishes: cart.getDataSource(),
-            dishTotalCount: cart.getTotalCount(),
+            deskNo,
+            dishes,
+            dishTotalCount,
             dishTotalPrice,
-            dishTotalPriceStr: formatCurrency(dishTotalPrice),
-            // TODO 从后端获取下单时间？
-            orderTime: formatTime(new Date()),
+            dishTotalPriceStr,
+            orderTime,
+        }, () => {
+            // 清除本次流程存储的相关数据, 其他数据应该不用清除
+            cart.clear(); // cart clear 用到 storeId 了
+            wx.removeStorageSync('storeId');
+            wx.removeStorageSync('deskNo');
         });
     },
 

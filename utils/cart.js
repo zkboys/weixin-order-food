@@ -1,4 +1,3 @@
-
 // 同步本地存储
 function syncStorage(dataSource, storeId) {
     wx.setStorage({
@@ -11,6 +10,24 @@ module.exports = {
     getDataSource: function () {
         const storeId = wx.getStorageSync('storeId') || '';
         return wx.getStorageSync(storeId + '-cart') || [];
+    },
+
+    getById: function (id) {
+        const storeId = wx.getStorageSync('storeId') || '';
+        const dataSource = wx.getStorageSync(storeId + '-cart') || [];
+        return dataSource.find(item => item.id === id);
+    },
+
+    update: function (data) {
+        const storeId = wx.getStorageSync('storeId') || '';
+        const dataSource = wx.getStorageSync(storeId + '-cart') || [];
+        const cartDish = dataSource.find(item => item.id === data.id);
+        if(cartDish) {
+            Object.keys(data).forEach(key => {
+                cartDish[key] = data[key];
+            });
+            syncStorage(dataSource, storeId);
+        }
     },
 
     add: function (data) {
@@ -43,6 +60,7 @@ module.exports = {
     },
 
     clear: function () {
+        console.log('clear cart');
         const storeId = wx.getStorageSync('storeId') || '';
         let dataSource = [];
 

@@ -1,4 +1,4 @@
-// pages/history-orders/history-orders.js
+const request = require('../../utils/request');
 Page({
 
     /**
@@ -25,8 +25,11 @@ Page({
 
     getOrdersByStatus: function (status) {
         // TODO 基于 status 查询历史订单 是否做滚动加载
-        wx.showLoading();
-        setTimeout(wx.hideLoading, 1000);
+        status = status === 'all' ? void 0 : status;
+        request.getHistoryOrders({status})
+            .then(res => {
+                console.log(res);
+            });
     },
 
     handleTabClick: function (e) {

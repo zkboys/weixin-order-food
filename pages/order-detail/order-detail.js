@@ -56,7 +56,7 @@ Page({
     handleMapClick: function () {
         const {name} = this.data.store;
         const {latitude, longitude, address} = this.data.store.position;
-        // fixme 好像不用户授权
+        // 好像不用户授权
         wx.openLocation({
             latitude,
             longitude,

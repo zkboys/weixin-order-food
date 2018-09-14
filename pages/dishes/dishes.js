@@ -1,7 +1,7 @@
 // pages/dishes.js
 const cart = require('../../utils/cart');
+const request = require('../../utils/request');
 const {formatCurrency} = require('../../utils/util');
-const data = require('./data');
 
 Page({
 
@@ -85,96 +85,109 @@ Page({
         const category = [];
         const dishes = [];
         const recommendDishes = [];
+        let recommendName = '';
         let hasDishSuit = false;
         const dishSuitCategoryId = 'dishSuit';
 
+        request.getDishes()
+            .then(res => {
+                if (res && res.data && res.data.data && res.data.data.length) {
+                    const data = res.data.data;
+                    data.forEach(item => {
+                        // 普通菜品
+                        if (item.type === '01') {
+                            const categoryId = item.id;
+                            (item.data || []).forEach(dish => {
+                                dishes.push({
+                                    ...dish,
+                                    type: item.type,
+                                    id: dish.id,
+                                    isSuit: false,
+                                    name: dish.name,
+                                    picture: dish.dishPictureUrl,
+                                    categoryId,
+                                    price: dish.dishPrice,
+                                    priceStr: formatCurrency(dish.dishPrice),
+                                    unit: dish.unit || '份',
+                                });
+                            });
 
-        // TODO 发请求，拿到data
-        data.forEach(item => {
-            // 普通菜品
-            if (item.type === '01') {
-                const categoryId = item.id;
-                (item.data || []).forEach(dish => {
-                    dishes.push({
-                        ...dish,
-                        type: item.type,
-                        id: dish.id,
-                        name: dish.name,
-                        picture: dish.dishPictureUrl,
-                        categoryId,
-                        price: dish.dishPrice,
-                        priceStr: formatCurrency(dish.dishPrice),
-                        unit: '份', // TODO 单位？
+                            category.push({
+                                ...item,
+                                id: item.id,
+                                name: item.name,
+                            });
+                        }
+
+                        // 套餐
+                        if (item.type === '02') {
+                            hasDishSuit = true;
+                            dishes.push({
+                                ...item.data,
+                                ...item,
+                                type: item.type,
+                                isSuit: true,
+                                id: item.id,
+                                name: item.name,
+                                picture: item.data.dishsuitPictureUril, // Uril ?
+                                categoryId: dishSuitCategoryId,
+                                price: item.data.dishsuitPrice,
+                                priceStr: formatCurrency(item.data.dishsuitPrice),
+                                unit: item.data.unit || '份',
+                            });
+                        }
+
+                        // 推荐
+                        if (item.type === '03' && item.data && item.data.length) {
+                            recommendName = item.data[0].name;
+                            item.data[0].dishList.forEach(dish => {
+                                recommendDishes.push({
+                                    ...dish,
+                                    id: dish.id,
+                                    isSuit: false,
+                                    name: dish.name,
+                                    picture: dish.dishPictureUrl,
+                                });
+                            })
+                        }
                     });
-                });
 
-                category.push({
-                    ...item,
-                    id: item.id,
-                    name: item.name,
-                });
-            }
+                    if (hasDishSuit) {
+                        // 套餐放入第一个
+                        category.unshift({
+                            id: dishSuitCategoryId,
+                            name: '套餐',
+                        });
+                    }
 
-            // 套餐
-            if (item.type === '02') {
-                // fixme 套餐的数据结构不友好
-                hasDishSuit = true;
-                dishes.push({
-                    ...item.data,
-                    ...item,
-                    type: item.type,
-                    id: item.id,
-                    name: item.name,
-                    picture: item.data.dishsuitPictureUril, // Uril ?
-                    categoryId: dishSuitCategoryId,
-                    price: item.data.dishsuitPrice,
-                    priceStr: formatCurrency(item.data.dishsuitPrice),
-                    unit: '份', // TODO 单位
-                });
-            }
 
-            // 推荐
-            // TODO 推荐的数据结构不对
-            if (item.type === '03') {
-                item.dishList.forEach(dish => {
-                    recommendDishes.push({
-                        ...dish,
-                        id: dish.id,
-                        name: dish.name,
-                        picture: dish.dishPictureUrl,
+                    if (category && category.length) {
+                        activeCategoryId = category[0].id;
+                        scrollCategoryId = category[0].id;
+                    }
+                    this.setData({
+                        activeCategoryId,
+                        scrollCategoryId,
+                        category,
+                        dishes,
+                        recommendName,
+                        recommendDishes,
                     });
-                })
-            }
-        });
-
-        if (hasDishSuit) {
-            // 套餐放入第一个
-            category.unshift({
-                id: dishSuitCategoryId,
-                name: '套餐',
+                    this.syncCart();
+                }
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
             });
-        }
-
-
-        if (category && category.length) {
-            activeCategoryId = category[0].id;
-            scrollCategoryId = category[0].id;
-        }
-        this.setData({
-            activeCategoryId,
-            scrollCategoryId,
-            category,
-            dishes,
-            recommendDishes,
-        });
-        this.syncCart();
     },
 
-    /**
-     * 生命周期函数--监听页面加载
-     */
     onLoad: function (options) {
         this.getDishes();
+    },
+
+    onShow: function () {
+        this.syncCart();
     },
 
     /**
@@ -223,8 +236,19 @@ Page({
 
     // 点击菜品图片，跳转菜品详情
     toDishDetail: function (e) {
+        const {id, suit = false} = e.currentTarget.dataset;
+        const {
+            dishes,
+            recommendDishes,
+        } = this.data;
+        let dish = dishes.find(item => item.id === id);
+        if (!dish) {
+            dish = recommendDishes.find(item => item.id === id);
+        }
+        wx.setStorageSync('dish-for-detail', dish);
+
         wx.navigateTo({
-            url: '/pages/dish-detail/dish-detail'
+            url: `/pages/dish-detail/dish-detail?id=${id}&isSuit=${suit}`
         })
     },
 
@@ -389,9 +413,7 @@ Page({
         let initLeft = offsetLeft + dishListLeft;
         let initTop = offsetTop + dishListTop - listScrollTop;
 
-        // fixme 购物车内部添加按钮，初始位置
         if (type === 'inCart') {
-
             return;
         }
 

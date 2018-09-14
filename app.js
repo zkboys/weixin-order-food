@@ -1,5 +1,7 @@
 //app.js
 const {parseQueryString} = require('./utils/util');
+const request = require('./utils/request');
+
 console.log(App);
 App({
     // onLaunch 小程序启动的时候触发，再次打开并不触发
@@ -8,22 +10,7 @@ App({
     // },
     onShow: function (options) {
         this.getSettings();
-        // 登录
-        if (!this.globalData.token) {
-            wx.login({
-                success: res => {
-                    // TODO 发送 res.code 到后台换取 openId, sessionKey, unionId
-
-                    // 登录成功之后，设置一些登录信息，比如token等
-                    this.globalData.token = 'test-token';
-
-                    // 登录成功之后，进行初始化
-                    this.init(options);
-                }
-            });
-        } else {
-            this.init(options);
-        }
+        this.init(options);
     },
 
     onHide: function () {
@@ -90,7 +77,33 @@ App({
         if (!storeId && !deskNo) {
             this.toIndex(path);
         } else {
-            this.initStoreMessage();
+            // 登录
+            wx.login({
+                success: res => {
+                    // TODO 发送 res.code 到后台换取 openId, sessionKey, unionId
+                    request.login({code: res.code, storeId, deskNo})
+                        .then(res => {
+                            if(res && res.data && res.data.data && res.data.data.token) {
+                                const token = res.data.data.token;
+                                // 登录成功之后，设置一些登录信息，比如token等
+                                this.globalData.token = token;
+
+                                // 登录成功之后，进行初始化
+                                this.initStoreMessage();
+                            }
+                        })
+                        .catch(err => {
+
+                            console.log(11, err);
+                        });
+                    // 登录成功之后，设置一些登录信息，比如token等
+                    this.globalData.token = 'test-token';
+
+                    // 登录成功之后，进行初始化
+                    this.initStoreMessage();
+                }
+            });
+
         }
     },
 

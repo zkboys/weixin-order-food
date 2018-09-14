@@ -1,9 +1,9 @@
 <view class="dish-container">
     <view class="top">
-        <title-bar title="今日推荐"/>
+        <title-bar title="{{recommendName}}"/>
         <view class="banner">
             <view class="banner-item" wx:for="{{recommendDishes}}" wx:key="{{item.id}}">
-                <image src="/images/img2@3x.png" mode="scaleToFill"/>
+                <image src="{{item.picture}}"  bindtap="toDishDetail" data-id="{{item.id}}" data-suit="{{item.isSuit}}"  mode="scaleToFill"/>
                 <view class="banner-item-tip">{{item.name}}</view>
             </view>
         </view>
@@ -42,7 +42,7 @@
                     <title-bar titleStyle="padding-bottom: 0" title="{{item.name}}"/>
                 </view>
                 <view class="dish-list-item" wx:for="{{dishes}}" wx:key="{{index}}" wx:for-item="dish" wx:if="{{dish.categoryId === item.id}}">
-                    <image class="dish-image" bindtap="toDishDetail" src="/images/img2@3x.png" mode="scaleToFill"/>
+                    <image class="dish-image" bindtap="toDishDetail" data-id="{{dish.id}}" data-suit="{{dish.isSuit}}" src="{{dish.picture}}" mode="scaleToFill"/>
                     <view class="dish-msg-block">
                         <view class="title">{{dish.name}}</view>
                         <view class="price-and-button">

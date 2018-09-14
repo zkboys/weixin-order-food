@@ -4,7 +4,7 @@
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 8,
 			"list": [
 				{
 					"id": 0,
@@ -90,6 +90,13 @@
 					"pathName": "pages/dishes/dishes",
 					"query": "scene=storeId%3d1%26deskNo%3d01",
 					"scene": "1047"
+				},
+				{
+					"id": -1,
+					"name": "dish-detail",
+					"pathName": "pages/dish-detail/dish-detail",
+					"query": "scene=storeId%3d1%26deskNo%3d01",
+					"scene": "1011"
 				}
 			]
 		}
