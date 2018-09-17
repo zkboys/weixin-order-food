@@ -1,4 +1,4 @@
-// pages/order-detail/order-detail.js
+const request = require('../../utils/request');
 Page({
 
     /**
@@ -37,7 +37,28 @@ Page({
     onLoad: function (options) {
         const {id} = options;
         // TODO 基于订单id 查询订单数据
-
+        request.getHistoryOrderDetail({id})
+            .then(res => {
+                let order = {};
+                if (res.data.code === '0000') {
+                    const d = res.data.data;
+                    order = {
+                        ...d,
+                        storeName: '',
+                        storeMobile: '',
+                        storePosition: '',
+                        totalPrice: '',
+                        totalPriceStr: '',
+                        dishes: [],
+                        status: '',
+                        orderNo: d.id,
+                        deskNo: d.deskNo,
+                        orderTime: '',
+                    };
+                }
+                this.setData({order});
+                console.log(111, order);
+            });
     },
 
     handleContactClick: function () {

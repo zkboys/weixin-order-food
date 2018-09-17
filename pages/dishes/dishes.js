@@ -89,6 +89,9 @@ Page({
         let hasDishSuit = false;
         const dishSuitCategoryId = 'dishSuit';
 
+        // TODO 图片路径
+        const imageUrl = 'http://172.16.136.57:8082/api';
+
         request.getDishes()
             .then(res => {
                 if (res && res.data && res.data.data && res.data.data.length) {
@@ -104,7 +107,7 @@ Page({
                                     id: dish.id,
                                     isSuit: false,
                                     name: dish.name,
-                                    picture: dish.dishPictureUrl,
+                                    picture: imageUrl + dish.dishPictureUrl,
                                     categoryId,
                                     price: dish.dishPrice,
                                     priceStr: formatCurrency(dish.dishPrice),
@@ -129,7 +132,7 @@ Page({
                                 isSuit: true,
                                 id: item.id,
                                 name: item.name,
-                                picture: item.data.dishsuitPictureUril, // Uril ?
+                                picture: imageUrl + item.data.dishsuitPictureUril, // Uril ?
                                 categoryId: dishSuitCategoryId,
                                 price: item.data.dishsuitPrice,
                                 priceStr: formatCurrency(item.data.dishsuitPrice),
@@ -143,10 +146,11 @@ Page({
                             item.data[0].dishList.forEach(dish => {
                                 recommendDishes.push({
                                     ...dish,
+                                    type: item.type,
                                     id: dish.id,
                                     isSuit: false,
                                     name: dish.name,
-                                    picture: dish.dishPictureUrl,
+                                    picture: imageUrl + dish.dishPictureUrl,
                                 });
                             })
                         }

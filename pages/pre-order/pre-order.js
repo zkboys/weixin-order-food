@@ -1,4 +1,5 @@
 const cart = require('../../utils/cart');
+const request = require('../../utils/request');
 const {formatCurrency} = require('../../utils/util');
 
 Page({
@@ -57,8 +58,34 @@ Page({
         const {remark} = this.data;
         // TODO 直接调用支付，支付成功之后，跳转到下单成功界面
 
-        wx.navigateTo({
-            url: '/pages/order-success/order-success',
-        })
+        const dataSource = cart.getDataSource();
+        const params = dataSource.map(item => {
+            const {specification} = item;
+            const remark = [];
+            if (specification && specification.length) {
+                specification.forEach(it => {
+                    if (it.selected) {
+                        remark.push(it.label);
+                    }
+                })
+            }
+            let type = item.type;
+            if (!type || type === '03') type = '01';
+            return {
+                type,
+                dishId: item.id,
+                count: item.count,
+                remark: remark.join(',')
+            };
+
+        });
+
+        request.submitOrder(params)
+            .then(res => {
+                console.log('submitOrder', res);
+                // wx.navigateTo({
+                //     url: '/pages/order-success/order-success',
+                // })
+            });
     },
 })

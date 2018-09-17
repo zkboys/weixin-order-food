@@ -11,29 +11,16 @@
         </view>
     </view>
     <view class="order-list">
-        <view class="order-item" bindtap="handleOrderClick" data-id="111">
-            <view class="store-name">{{storeName}}</view>
+        <view class="order-item" wx:for="{{dataSource}}" wx:key="{{item.id}}" bindtap="handleOrderClick" data-id="{{item.id}}">
+            <view class="store-name">{{item.storeName}}</view>
             <view class="order-msg">
                 <view class="time-money">
-                    <text>2018-09-01 17:11:47</text>
-                    <text class="money">￥130.00</text>
+                    <text>{{item.orderTime}}</text>
+                    <text class="money">{{item.priceStr}}</text>
                 </view>
                 <view class="type-status">
                     <text>店内自助</text>
-                    <text class="status">已完成</text>
-                </view>
-            </view>
-        </view>
-        <view class="order-item" bindtap="handleOrderClick" data-id="222">
-            <view class="store-name">{{storeName}}</view>
-            <view class="order-msg">
-                <view class="time-money">
-                    <text>2018-09-01 17:11:47</text>
-                    <text class="money">￥130.00</text>
-                </view>
-                <view class="type-status">
-                    <text>店内自助</text>
-                    <text class="status">已完成</text>
+                    <text class="status">{{item.status}}</text>
                 </view>
             </view>
         </view>

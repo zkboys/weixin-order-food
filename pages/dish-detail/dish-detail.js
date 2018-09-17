@@ -42,6 +42,7 @@ Page({
                 id: dish.id,
                 picture: dish.picture,
                 name: dish.name,
+                type: dish.type,
                 isSuit: dish.isSuit,
                 dishes: dish.list,
                 specification,

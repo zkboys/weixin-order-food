@@ -16,6 +16,8 @@ if (!Promise.prototype.finally) {
 // TODO 修改服务器地址
 const base_url = 'http://172.16.136.57:8083/weChatApi';
 
+// TODO 请求返回结果 statusCode = 400 时，也不触发fail函数？都走success ？？？？
+
 /**
  * 对请求 options 进行统一处理
  * @param options
@@ -70,6 +72,7 @@ module.exports = {
     },
     getDishes: () => {
         const url = '/weChat/homePage/query';
+        const imageUrl = 'http://172.16.136.57:8082/api';
 
         return new Promise((resolve, reject) => {
             wx.showLoading({title: '加载中', mask: true});
@@ -111,6 +114,58 @@ module.exports = {
                 fail: (error) => {
                     wx.showToast({
                         title: '获取订单失败',
+                        icon: 'none',
+                    });
+                    reject(error);
+                },
+                complete: () => {
+                    wx.hideLoading();
+                },
+            }))
+        });
+    },
+    getHistoryOrderDetail: (params) => {
+        const url = '/weChat/queryOrderDetails';
+        const data = {orderId: params.id};
+
+        return new Promise((resolve, reject) => {
+            wx.showLoading({title: '加载中', mask: true});
+            wx.request(getOptions({
+                method: 'GET',
+                data,
+                url,
+                success: (res) => {
+                    resolve(res);
+                },
+                fail: (error) => {
+                    wx.showToast({
+                        title: '获取订单详情失败',
+                        icon: 'none',
+                    });
+                    reject(error);
+                },
+                complete: () => {
+                    wx.hideLoading();
+                },
+            }))
+        });
+    },
+    submitOrder: (params) => {
+        const url = '/weChat/pay';
+        const data = params;
+
+        return new Promise((resolve, reject) => {
+            wx.showLoading({title: '加载中', mask: true});
+            wx.request(getOptions({
+                method: 'POST',
+                data,
+                url,
+                success: (res) => {
+                    resolve(res);
+                },
+                fail: (error) => {
+                    wx.showToast({
+                        title: '下单失败',
                         icon: 'none',
                     });
                     reject(error);
