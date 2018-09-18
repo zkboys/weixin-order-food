@@ -48,7 +48,8 @@ Page({
                         const day = date.substr(6, 2);
                         const hour = time.substr(0, 2);
                         const minute = time.substr(2, 2);
-                        orderTime = `${year}-${month}-${day} ${hour}:${minute}`;
+                        const second = time.substr(4, 2);
+                        orderTime = `${year}-${month}-${day} ${hour}:${minute}:${second}`;
                     }
                     return {
                         ...item,
@@ -57,7 +58,7 @@ Page({
                         price: item.price,
                         priceStr: formatCurrency(item.price),
                         orderTime,
-                        storeName: '门店名', // TODO 接口中没有门店名
+                        storeName: item.store.name,
                         status,
                     };
                 });
