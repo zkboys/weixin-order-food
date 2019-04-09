@@ -1,48 +1,58 @@
-const app = getApp();
+const base_url = 'https://ordering.httpshop.com/wxapi';
 
-// 扩展Promise finally 方法
-if (!Promise.prototype.finally) {
-    Promise.prototype.finally = function (callback) {
-        let P = this.constructor;
-        return this.then(
-            value => P.resolve(callback()).then(() => value),
-            reason => P.resolve(callback()).then(() => {
-                throw reason;
-            })
-        );
-    };
-}
+// const base_url = 'http://172.16.42.96:8090';
 
-// TODO 修改服务器地址
-const base_url = 'http://172.16.136.57:8083/weChatApi';
-
-// TODO 请求返回结果 statusCode = 400 时，也不触发fail函数？都走success ？？？？
-
-/**
- * 对请求 options 进行统一处理
- * @param options
- * @returns {{url: string}}
- */
-function getOptions(options) {
+function request(options) {
     const app = getApp();
-    const {url, header = {}, data} = options;
-    if (!header['SXF-TOKEN']) header['SXF-TOKEN'] = app.globalData.token;
+    const {
+        url,
+        header = {},
+        data,
+        loading = {title: '加载中', mask: true},
+        ...others
+    } = options;
+    if (!header['SXF-TOKEN']) header['SXF-TOKEN'] = app.globalData.token || '';
 
-    const params = {};
-    if (data) {
+    let params = {};
+    if (data && !Array.isArray(data)) {
         Object.keys(data).forEach(key => {
             const value = data[key];
             if (value !== void 0) {
                 params[key] = value;
             }
         });
+    } else {
+        params = data;
     }
-    return {
-        ...options,
+
+    const opts = {
+        url: base_url + url,
         header,
         data: params,
-        url: base_url + url,
-    }
+        ...others
+    };
+
+    return new Promise((resolve, reject) => {
+        wx.showLoading(loading);
+
+        wx.request({
+            ...opts,
+            success: (res) => {
+                if (res.statusCode !== 200) {
+                    reject(res);
+                } else {
+                    resolve(res);
+                }
+            },
+            fail: (error) => {
+                reject(error);
+            },
+            complete: () => {
+                wx.hideLoading();
+            },
+        });
+    });
+
 }
 
 module.exports = {
@@ -51,47 +61,21 @@ module.exports = {
         const {code, deskNo, storeId} = options;
         const data = {code, deskNo, storeId};
 
-        return new Promise((resolve, reject) => {
-            wx.showLoading({title: '加载中', mask: true});
-            wx.request(getOptions({
-                method: 'POST',
-                data,
-                url,
-                success: (res) => {
-                    resolve(res);
-                },
-                fail: (error) => {
-                    reject(error);
-                },
-                complete: () => {
-                    wx.hideLoading();
-                },
-            }))
+        return request({
+            url,
+            method: 'POST',
+            data,
         });
-
     },
     getDishes: () => {
         const url = '/weChat/homePage/query';
-        const imageUrl = 'http://172.16.136.57:8082/api';
-
-        return new Promise((resolve, reject) => {
-            wx.showLoading({title: '加载中', mask: true});
-            wx.request(getOptions({
-                url,
-                success: (res) => {
-                    resolve(res);
-                },
-                fail: (error) => {
-                    wx.showToast({
-                        title: '获取菜品失败',
-                        icon: 'none',
-                    });
-                    reject(error);
-                },
-                complete: () => {
-                    wx.hideLoading();
-                },
-            }))
+        return request({
+            url,
+        }).catch(() => {
+            wx.showToast({
+                title: '获取菜品失败',
+                icon: 'none',
+            });
         });
     },
     getHistoryOrders: (params) => {
@@ -102,79 +86,44 @@ module.exports = {
             status: params.status,
         };
 
-        return new Promise((resolve, reject) => {
-            wx.showLoading({title: '加载中', mask: true});
-            wx.request(getOptions({
-                method: 'POST',
-                data,
-                url,
-                success: (res) => {
-                    resolve(res);
-                },
-                fail: (error) => {
-                    wx.showToast({
-                        title: '获取订单失败',
-                        icon: 'none',
-                    });
-                    reject(error);
-                },
-                complete: () => {
-                    wx.hideLoading();
-                },
-            }))
+        return request({
+            method: 'POST',
+            data,
+            url,
+        }).catch(() => {
+            wx.showToast({
+                title: '获取订单失败',
+                icon: 'none',
+            });
         });
     },
     getHistoryOrderDetail: (params) => {
         const url = '/weChat/queryOrderDetails';
         const data = {orderId: params.id};
 
-        return new Promise((resolve, reject) => {
-            wx.showLoading({title: '加载中', mask: true});
-            wx.request(getOptions({
-                method: 'GET',
-                data,
-                url,
-                success: (res) => {
-                    resolve(res);
-                },
-                fail: (error) => {
-                    wx.showToast({
-                        title: '获取订单详情失败',
-                        icon: 'none',
-                    });
-                    reject(error);
-                },
-                complete: () => {
-                    wx.hideLoading();
-                },
-            }))
+        return request({
+            data,
+            url,
+        }).catch(() => {
+            wx.showToast({
+                title: '获取订单详情失败',
+                icon: 'none',
+            });
         });
     },
     submitOrder: (params) => {
         const url = '/weChat/pay';
         const data = params;
-
-        return new Promise((resolve, reject) => {
-            wx.showLoading({title: '加载中', mask: true});
-            wx.request(getOptions({
-                method: 'POST',
-                data,
-                url,
-                success: (res) => {
-                    resolve(res);
-                },
-                fail: (error) => {
-                    wx.showToast({
-                        title: '下单失败',
-                        icon: 'none',
-                    });
-                    reject(error);
-                },
-                complete: () => {
-                    wx.hideLoading();
-                },
-            }))
+        return request({
+            method: 'POST',
+            data,
+            url,
+        }).catch(() => {
+            wx.showToast({
+                title: '下单失败',
+                icon: 'none',
+            });
         });
     },
-    getOrderStatus: (options) => wx.request(getOptions(options)),
+    getOrderStatus: (options) => request(options),
 };

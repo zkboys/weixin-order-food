@@ -12,7 +12,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.0.4",
-	"appid": "wxabc993e3374fca1d",
+	"appid": "wx7c89ca859d0345fd",
 	"projectname": "%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F-%E6%89%AB%E7%A0%81%E7%82%B9%E9%A4%90",
 	"isGameTourist": false,
 	"condition": {
@@ -33,14 +33,14 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 8,
+			"current": 0,
 			"list": [
 				{
 					"id": 0,
-					"name": "1011: 扫描二维码 scene=storeId=1&deskNo=01",
+					"name": "1011: 扫描二维码 scene=storeId=1231231&deskNo=15",
 					"pathName": "pages/index/index",
-					"query": "scene=storeId%3d1%26deskNo%3d01",
-					"scene": "1011"
+					"query": "scene=storeId%3d1231231%26deskNo%3d15",
+					"scene": 1011
 				},
 				{
 					"id": 1,

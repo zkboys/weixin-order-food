@@ -1,7 +1,7 @@
 <view class="detail-container">
     <view class="detail-block">
         <view class="picture">
-            <image src="/images/vegetable@3x.png" mode="widthFix"></image>
+            <image src="{{dish.picture}}" mode="widthFix"></image>
         </view>
         <view class="title">{{dish.name}}</view>
         <block wx:if="{{dish.isSuit}}">

@@ -89,8 +89,7 @@ Page({
         let hasDishSuit = false;
         const dishSuitCategoryId = 'dishSuit';
 
-        // TODO 图片路径
-        const imageUrl = 'http://172.16.136.57:8082/api';
+        const imageUrl = 'https://ordering.httpshop.com';
 
         request.getDishes()
             .then(res => {
