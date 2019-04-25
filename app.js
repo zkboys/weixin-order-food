@@ -40,7 +40,6 @@ App({
         //     return;
         // }
 
-        // TODO 如何获取二维码中参数
         // 二维码中携带的参数
         const scene = options && options.query && options.query.scene;
 
@@ -80,10 +79,9 @@ App({
             // 登录
             wx.login({
                 success: res => {
-                    // TODO 发送 res.code 到后台换取 openId, sessionKey, unionId
                     request.login({code: res.code, storeId, deskNo})
                         .then(res => {
-                            if(res && res.data && res.data.data && res.data.data.token) {
+                            if (res && res.data && res.data.data && res.data.data.token) {
                                 const token = res.data.data.token;
                                 // 登录成功之后，设置一些登录信息，比如token等
                                 this.globalData.token = token;
@@ -96,11 +94,6 @@ App({
 
                             console.log(11, err);
                         });
-                    // 登录成功之后，设置一些登录信息，比如token等
-                    this.globalData.token = 'test-token';
-
-                    // 登录成功之后，进行初始化
-                    this.initStoreMessage();
                 }
             });
 
@@ -111,18 +104,19 @@ App({
     initStoreMessage: function (callBack) {
         const storeId = wx.getStorageSync('storeId');
         const deskNo = wx.getStorageSync('deskNo');
-        // TODO 基于 storeId 获取店铺信息
-        const store = {
-            logo: '/images/logo.png',
-            name: '望湘园金源时代店',
-        };
-        wx.setStorageSync('store', store);
 
-        // TODO 基于 storeId deskNo 获取结账方式
+        request.getStore().then(res => {
+            const {name} = res.data.data;
+            const store = {
+                logo: '/images/logo.png',
+                name,
+            };
+            wx.setStorageSync('store', store);
+        });
+
         const checkOutType = 'before'; // before 先结账 after 后结账
         wx.setStorageSync('checkOutType', checkOutType);
 
-        // TODO 根据 storeId deskNo 查询当前微信用户是否有未完成订单（未付款的）
         // 后付款用户，会存在未完成订单，需要跳转到首页，提示加菜、结账等
         let hasUncompletedOrder = false;
         wx.setStorageSync('hasUncompletedOrder', hasUncompletedOrder);
@@ -130,7 +124,6 @@ App({
             // TODO 根据未完成订单恢复购物车数据、点餐人数，然后跳转到首页，提示加菜、结账
         }
 
-        // TODO 异步操作
         if (this.initReadyCallBack) {
             this.initReadyCallBack();
         }

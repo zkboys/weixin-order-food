@@ -1,6 +1,6 @@
 const base_url = 'https://ordering.httpshop.com/wxapi';
 
-// const base_url = 'http://172.16.42.96:8090';
+// const base_url = 'http://172.16.42.96:8080';
 
 function request(options) {
     const app = getApp();
@@ -121,6 +121,20 @@ module.exports = {
         }).catch(() => {
             wx.showToast({
                 title: '下单失败',
+                icon: 'none',
+            });
+        });
+    },
+    getStore: () => {
+        const url = '/weChat/queryStoreById';
+        const data = {};
+        return request({
+            method: 'GET',
+            data,
+            url,
+        }).catch(() => {
+            wx.showToast({
+                title: '获取店铺信息失败',
                 icon: 'none',
             });
         });

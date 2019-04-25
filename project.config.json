@@ -15,6 +15,8 @@
 	"appid": "wx7c89ca859d0345fd",
 	"projectname": "%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F-%E6%89%AB%E7%A0%81%E7%82%B9%E9%A4%90",
 	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,
@@ -37,9 +39,9 @@
 			"list": [
 				{
 					"id": 0,
-					"name": "1011: 扫描二维码 scene=storeId=1231231&deskNo=15",
+					"name": "1011: 扫描二维码 scene=storeId=1231231&deskNo=大厅011",
 					"pathName": "pages/index/index",
-					"query": "scene=storeId%3d1231231%26deskNo%3d15",
+					"query": "scene=storeId%3d1231231%26deskNo%3d大厅011",
 					"scene": 1011
 				},
 				{

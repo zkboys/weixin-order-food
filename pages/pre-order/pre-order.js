@@ -56,8 +56,6 @@ Page({
     },
     handleSubmit: function () {
         const {remark} = this.data;
-        // TODO 直接调用支付，支付成功之后，跳转到下单成功界面
-
         const dataSource = cart.getDataSource();
         const params = dataSource.map(item => {
             const {specification} = item;
@@ -108,6 +106,10 @@ Page({
                     signType: 'MD5',
                     success: () => {
                         console.log('success');
+                        // 支付成功之后跳转
+                        wx.navigateTo({
+                            url: '/pages/order-success/order-success',
+                        })
                     },
                     fail: () => {
                         console.log('fail');
@@ -116,9 +118,6 @@ Page({
                         console.log('complete');
                     },
                 });
-                wx.navigateTo({
-                    url: '/pages/order-success/order-success',
-                })
             });
     },
 })

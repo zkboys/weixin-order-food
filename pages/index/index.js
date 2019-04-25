@@ -2,6 +2,7 @@
 //获取应用实例
 const app = getApp();
 const request = require('../../utils/request');
+const {parseQueryString} = require('../../utils/util');
 
 Page({
     data: {
@@ -115,8 +116,10 @@ Page({
                 console.log(data);
 
                 // TODO 获取扫描结果中的storeId deskNo
-                const storeId = '1';
-                const deskNo = '1';
+                const {path} = data;
+                const params = parseQueryString(decodeURIComponent(path));
+                const {storeId, deskNo} = params;
+
                 wx.setStorageSync('storeId', storeId);
                 wx.setStorageSync('deskNo', deskNo);
                 wx.setStorageSync('innerScan', true);

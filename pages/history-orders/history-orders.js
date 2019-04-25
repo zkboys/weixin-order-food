@@ -24,7 +24,6 @@ Page({
     },
 
     getOrdersByStatus: function (status) {
-        // fixme 是否做滚动加载
         status = status === 'all' ? void 0 : status;
         const statusList = {
             '00': '已完成',
