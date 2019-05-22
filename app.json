@@ -13,7 +13,7 @@
         "backgroundTextStyle": "light",
         "backgroundColor": "#333",
         "navigationBarBackgroundColor": "#000",
-        "navigationBarTitleText": "小随点餐",
+        "navigationBarTitleText": "小行点餐",
         "navigationBarTextStyle": "white"
     },
     "sitemapLocation": "sitemap.json"

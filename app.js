@@ -2,7 +2,7 @@
 const {parseQueryString} = require('./utils/util');
 const request = require('./utils/request');
 
-console.log(App);
+// console.log(App);
 App({
     // onLaunch 小程序启动的时候触发，再次打开并不触发
     // fixme onShow 页面再次显示触发，调用扫码、地图等，再次切换回来也触发
@@ -14,13 +14,13 @@ App({
     },
 
     onHide: function () {
-        console.log('app.js onHide');
-        wx.showToast({title: 'app.js onHide'});
+        // wx.showToast({title: 'app.js onHide'});
 
         wx.setStorageSync('innerScan', false);
     },
 
-    init: function (options) {
+    init: function (options = {}) {
+        console.log(options);
         // 要启动的页面path
         const {scene: sceneType, path} = options;
 
@@ -41,18 +41,15 @@ App({
         // }
 
         // 二维码中携带的参数
-        const scene = options && options.query && options.query.scene;
+        const query = options && options.query || {};
+
 
         // 参数存在 进入初始化流程
-        let storeId;
-        let deskNo;
+        let storeId = query.storeId;
+        let deskNo = query.deskNo;
 
         // 存在参数，优先从参数中获取storeId deskNo
-        if (scene) {
-            const params = parseQueryString(decodeURIComponent(options.query.scene));
-            storeId = params.storeId;
-            deskNo = params.deskNo;
-
+        if (storeId && deskNo) {
             // 缓存storeId deskNo
             wx.setStorageSync('storeId', storeId);
             wx.setStorageSync('deskNo', deskNo);
@@ -63,6 +60,9 @@ App({
             // 参数不存在（非扫码进入），从存储中获取storeId deskNo
             storeId = wx.getStorageSync('storeId');
             deskNo = wx.getStorageSync('deskNo');
+
+            // 记录获取到storeId deskNo时间
+            wx.setStorageSync('scanTime-' + storeId + deskNo, Date.now());
 
             if (storeId && deskNo && this.isExpired()) {
                 storeId = null;
@@ -91,8 +91,6 @@ App({
                             }
                         })
                         .catch(err => {
-
-                            console.log(11, err);
                         });
                 }
             });

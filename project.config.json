@@ -12,7 +12,7 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.0.4",
-	"appid": "wx7c89ca859d0345fd",
+	"appid": "wx22c007b857d08d07",
 	"projectname": "%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F-%E6%89%AB%E7%A0%81%E7%82%B9%E9%A4%90",
 	"isGameTourist": false,
 	"simulatorType": "wechat",
@@ -35,7 +35,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 9,
 			"list": [
 				{
 					"id": 0,
@@ -99,6 +99,13 @@
 					"pathName": "pages/dish-detail/dish-detail",
 					"query": "scene=storeId%3d1%26deskNo%3d01",
 					"scene": "1011"
+				},
+				{
+					"id": -1,
+					"name": "index",
+					"pathName": "pages/index/index",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

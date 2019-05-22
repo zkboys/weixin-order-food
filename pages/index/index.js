@@ -18,9 +18,7 @@ Page({
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
     },
 
-    onLoad: function (options) {
-        console.log('index.js onLoad', options);
-
+    onLoad: function () {
         let isInit = false;
         app.initReadyCallBack = () => { // 初始化成功回调
             this.init();
@@ -29,7 +27,7 @@ Page({
         if (!isInit) this.init();
     },
 
-    init: function (options) {
+    init: function () {
         const hasUncompletedOrder = wx.getStorageSync('hasUncompletedOrder');
         const store = wx.getStorageSync('store');
         const storeId = wx.getStorageSync('storeId');
@@ -117,16 +115,15 @@ Page({
 
                 // TODO 获取扫描结果中的storeId deskNo
                 const {path} = data;
-                const params = parseQueryString(decodeURIComponent(path));
+                const params = parseQueryString(decodeURIComponent(path.split('?')[1]));
                 const {storeId, deskNo} = params;
+                console.log(params);
 
                 wx.setStorageSync('storeId', storeId);
                 wx.setStorageSync('deskNo', deskNo);
                 wx.setStorageSync('innerScan', true);
 
-                app.initStoreMessage(() => {
-                    this.init();
-                });
+                app.init();
 
                 this.setData({
                     showScanTip: false,
