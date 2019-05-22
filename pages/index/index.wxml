@@ -30,12 +30,12 @@
     <view class="btn-operator-group" wx:if="{{showOrderButton}}">
         <view class="btn-operator" bindtap="handleOrderClick" data-type="single">
             <image class="order" src="/images/user-single@3x.png" mode="cover"></image>
-            <text class="order-text">单人点餐</text>
+            <text class="order-text">开始点餐</text>
         </view>
-        <view class="btn-operator" bindtap="handleOrderClick" data-type="multiple">
-            <image class="order" src="/images/user-multiple@3x.png" mode="cover"></image>
-            <text class="order-text">多人同步点餐</text>
-        </view>
+        <!--<view class="btn-operator" bindtap="handleOrderClick" data-type="multiple">-->
+            <!--<image class="order" src="/images/user-multiple@3x.png" mode="cover"></image>-->
+            <!--<text class="order-text">多人同步点餐</text>-->
+        <!--</view>-->
     </view>
 
     <view class="btn-operator-group" wx:if="{{showAddPayButton}}">

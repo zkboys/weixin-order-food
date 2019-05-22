@@ -41,6 +41,7 @@ Page({
         }, () => {
             // 清除本次流程存储的相关数据, 其他数据应该不用清除
             cart.clear(); // cart clear 用到 storeId 了
+            // 清除storeId deskNo之后，需要重新扫码
             wx.removeStorageSync('storeId');
             wx.removeStorageSync('deskNo');
         });

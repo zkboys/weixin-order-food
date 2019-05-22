@@ -79,6 +79,7 @@ App({
             // 登录
             wx.login({
                 success: res => {
+
                     request.login({code: res.code, storeId, deskNo})
                         .then(res => {
                             if (res && res.data && res.data.data && res.data.data.token) {
@@ -91,6 +92,11 @@ App({
                             }
                         })
                         .catch(err => {
+                            console.log(err);
+                            wx.showToast({
+                                title: '登录失败',
+                                icon: 'none',
+                            });
                         });
                 }
             });
@@ -110,21 +116,22 @@ App({
                 name,
             };
             wx.setStorageSync('store', store);
+
+            const checkOutType = 'before'; // before 先结账 after 后结账
+            wx.setStorageSync('checkOutType', checkOutType);
+
+            // 后付款用户，会存在未完成订单，需要跳转到首页，提示加菜、结账等
+            let hasUncompletedOrder = false;
+            wx.setStorageSync('hasUncompletedOrder', hasUncompletedOrder);
+            if (hasUncompletedOrder) {
+                // TODO 根据未完成订单恢复购物车数据、点餐人数，然后跳转到首页，提示加菜、结账
+            }
+
+            if (this.initReadyCallBack) {
+                this.initReadyCallBack();
+            }
+
         });
-
-        const checkOutType = 'before'; // before 先结账 after 后结账
-        wx.setStorageSync('checkOutType', checkOutType);
-
-        // 后付款用户，会存在未完成订单，需要跳转到首页，提示加菜、结账等
-        let hasUncompletedOrder = false;
-        wx.setStorageSync('hasUncompletedOrder', hasUncompletedOrder);
-        if (hasUncompletedOrder) {
-            // TODO 根据未完成订单恢复购物车数据、点餐人数，然后跳转到首页，提示加菜、结账
-        }
-
-        if (this.initReadyCallBack) {
-            this.initReadyCallBack();
-        }
     },
 
     // 是否过期，提示重新扫码
